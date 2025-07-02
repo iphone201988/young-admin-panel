@@ -27,6 +27,12 @@ export const youngApi: any = createApi({
         body,
       }),
     }),
+    getDashboardStats: builder.query<any, void>({
+      query: () => ({
+        url: `getDashboardStats`,
+        method: "GET",
+      }),
+    }),
     getAllUsers: builder.query<any, void>({
       query: () => ({
         url: `getAllUsers`,
@@ -105,6 +111,7 @@ export const youngApi: any = createApi({
 
 export const {
   useAdminLoginMutation,
+  useGetDashboardStatsQuery,
   useGetAllUsersQuery,
   useGetComplaintsQuery,
   useGetPostsQuery,

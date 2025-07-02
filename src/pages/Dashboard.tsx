@@ -4,8 +4,12 @@ import { Button } from "@/components/ui/button";
 import StatsCards from "@/components/dashboard/StatsCards";
 import RecentActivity from "@/components/dashboard/RecentActivity";
 import PendingActions from "@/components/dashboard/PendingActions";
+import BarChartComponent from "@/components/BarChart";
+import { useGetDashboardStatsQuery } from "@/redux/api";
 
 export default function Dashboard() {
+  const { data, isLoading } = useGetDashboardStatsQuery();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -14,15 +18,16 @@ export default function Dashboard() {
       className="space-y-8"
     >
       {/* Stats Cards */}
-      <StatsCards />
+      <StatsCards data={data?.data} isLoading={isLoading}/>
+      <BarChartComponent data={data?.data?.postsPerMonth}/>
 
       {/* Action Buttons */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.1 }}
         className="flex flex-wrap gap-4"
-      >
+      > */}
         {/* <Button className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center space-x-2">
           <Plus size={16} />
           <span>Add New User</span>
@@ -39,10 +44,10 @@ export default function Dashboard() {
           <Download size={16} />
           <span>Export Data</span>
         </Button> */}
-      </motion.div>
+      {/* </motion.div> */}
 
       {/* Quick Actions and Recent Activity */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.2 }}
@@ -50,7 +55,7 @@ export default function Dashboard() {
       >
         <RecentActivity />
         <PendingActions />
-      </motion.div>
+      </motion.div> */}
     </motion.div>
   );
 }
