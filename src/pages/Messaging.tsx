@@ -10,8 +10,8 @@ export default function Messaging() {
 
   // Calculate messaging statistics
   const totalMessages = messages.length;
-  const bulkMessages = messages.filter((m) => m.isBulk).length;
-  const individualMessages = messages.filter((m) => !m.isBulk).length;
+  const bulkMessages = messages.filter((m: any) => m.isBulk).length;
+  const individualMessages = messages.filter((m: any) => !m.isBulk).length;
 
   return (
     <motion.div
@@ -101,7 +101,7 @@ export default function Messaging() {
             </div>
           ) : (
             <div className="space-y-4">
-              {messages.slice(0, 10).map((message) => (
+              {messages.slice(0, 10).map((message: any) => (
                 <motion.div
                   key={message.id}
                   initial={{ opacity: 0, y: 10 }}

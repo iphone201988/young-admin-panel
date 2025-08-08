@@ -77,9 +77,9 @@ export const youngApi: any = createApi({
       }),
       providesTags: [COMPLAINTS],
     }),
-    getPosts: builder.query<any, void>({
-      query: () => ({
-        url: `getPosts`,
+    getPosts: builder.query<any, any>({
+      query: ({ page = 1 }) => ({
+        url: `getPosts?page=${page}`,
         method: "GET",
       }),
       providesTags: [POSTS],
@@ -115,6 +115,7 @@ export const {
   useGetAllUsersQuery,
   useGetComplaintsQuery,
   useGetPostsQuery,
+  useLazyGetPostsQuery,
   useGetAllAdsQuery,
   useUpdateUserStatusMutation,
   useUpdateReportStatusMutation,

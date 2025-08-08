@@ -127,7 +127,7 @@ export default function ComplaintsTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredComplaints.map((complaint) => (
+            {filteredComplaints.map((complaint:any) => (
               <motion.tr
                 key={complaint.id}
                 initial={{ opacity: 0 }}

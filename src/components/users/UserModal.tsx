@@ -47,8 +47,8 @@ export default function UserModal({ user, isOpen, onClose }: UserModalProps) {
       fullName: user?.fullName || "",
       email: user?.email || "",
       crdNumber: user?.crdNumber || "",
-      status: user?.status || "pending",
-      crdStatus: user?.crdStatus || "pending",
+      status: user?.status as UserFormData["status"] || "pending",
+      crdStatus: user?.crdStatus as UserFormData["crdStatus"] || "pending",
     },
   });
 
@@ -73,8 +73,8 @@ export default function UserModal({ user, isOpen, onClose }: UserModalProps) {
         fullName: user.fullName,
         email: user.email,
         crdNumber: user.crdNumber || "",
-        status: user.status,
-        crdStatus: user.crdStatus,
+        status: user.status as UserFormData["status"],
+        crdStatus: user.crdStatus as UserFormData["crdStatus"],
       });
     }
   }, [user, form]);

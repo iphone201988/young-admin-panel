@@ -18,9 +18,9 @@ import { Link, useLocation } from "react-router";
 const navigationItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },
   { icon: Users, label: "User Management", href: "/users" },
-  { icon: Flag, label: "Complaints", href: "/complaints", badge: "23" },
+  { icon: Flag, label: "Complaints", href: "/complaints", badge: "" },
   { icon: FileText, label: "Posts", href: "/posts" },
-  { icon: Megaphone, label: "Megaphone Approval", href: "/ads", badge: "7" },
+  { icon: Megaphone, label: "Megaphone Approval", href: "/ads", badge: "" },
   // { icon: MessageSquare, label: "Messaging", href: "/messaging" },
   { icon: Settings, label: "Settings", href: "/settings" },
 ];

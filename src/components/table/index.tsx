@@ -115,7 +115,7 @@ const DataTable = ({
 
   return (
     <div
-      className={`bg-white shadow-lg rounded-lg overflow-hidden ${className}`}
+      className={`bg-white shadow-lg rounded-lg  ${className}`}
     >
       {/* Search Bar */}
       {searchable && (
@@ -156,7 +156,7 @@ const DataTable = ({
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-gray-200 h-full overflow-auto no-scrollbar">
             {paginatedData.length === 0 ? (
               <tr>
                 <td

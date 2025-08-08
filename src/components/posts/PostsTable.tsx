@@ -92,7 +92,7 @@ export default function PostsTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredPosts.map((post) => (
+            {filteredPosts.map((post: any) => (
               <motion.tr
                 key={post.id}
                 initial={{ opacity: 0 }}

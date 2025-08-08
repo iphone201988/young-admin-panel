@@ -102,7 +102,7 @@ export default function AdsTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredAds.map((ad) => (
+            {filteredAds.map((ad:any) => (
               <motion.tr
                 key={ad.id}
                 initial={{ opacity: 0 }}

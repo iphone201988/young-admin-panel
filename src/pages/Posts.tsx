@@ -3,16 +3,36 @@ import { FileText, Trash2, Flag, Share2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import PostsTable from "@/components/posts/PostsTable";
-import { useGetPostsQuery } from "@/redux/api";
+import { useGetPostsQuery, useLazyGetPostsQuery } from "@/redux/api";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import DataTable from "@/components/table";
 import { getPostsColumns } from "@/columns";
 import PostModal from "@/components/PostModal";
+import { usePagination } from "@/hooks/usePagination";
 // import { useGetPostsQuery } from "@/store/api";
 
 export default function Posts() {
-  const { data, isLoading } = useGetPostsQuery();
+  const [getPosts, { data, isLoading }] = useLazyGetPostsQuery();
+
+  const {
+    pagination,
+    setPagnation,
+    scrollableRef,
+    handleScroll,
+    restoreScrollPosition,
+  } = usePagination({
+    scrollDown: true,
+    fetchData: () => {
+      getPosts({ page: pagination.page });
+    },
+  });
+
+  useEffect(() => {
+    getPosts({ page: pagination.page });
+  }, []);
+
+  // const { data, isLoading } = useGetPostsQuery();
   const [posts, setPosts] = useState([]);
   const [stats, setStats] = useState({
     total: 0,
@@ -35,6 +55,7 @@ export default function Posts() {
 
   useEffect(() => {
     if (data?.success) {
+      const { pagination } = data;
       const finalData = data?.data?.posts.map((post: any) => ({
         id: post?._id,
         title: post?.title,
@@ -52,6 +73,12 @@ export default function Posts() {
       }));
 
       setPosts(finalData);
+
+      setPagnation((prev: any) => ({
+        ...prev,
+        totalPages: pagination.totalPages,
+      }));
+      restoreScrollPosition();
 
       const {
         total,
@@ -151,7 +178,7 @@ export default function Posts() {
       </div>
 
       {/* Posts Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-border overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-border">
         {showModal && selectedPost && (
           <PostModal
             open={showModal}
@@ -166,7 +193,7 @@ export default function Posts() {
             Manage user posts and content moderation
           </p>
         </div>
-        <div className="p-6">
+        <div className="p-6" ref={scrollableRef} onScroll={handleScroll}>
           <DataTable
             data={posts}
             columns={postsColumns}

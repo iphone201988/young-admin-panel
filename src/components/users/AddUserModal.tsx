@@ -129,6 +129,7 @@ export default function AddUserModal({ isOpen, onClose }: AddUserModalProps) {
                   <FormItem className="md:col-span-2">
                     <FormLabel>CRD Number (Optional)</FormLabel>
                     <FormControl>
+                       {/* @ts-ignore */}
                       <Input
                         type="text"
                         {...field}
