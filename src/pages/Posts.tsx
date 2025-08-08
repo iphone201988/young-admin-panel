@@ -13,26 +13,11 @@ import { usePagination } from "@/hooks/usePagination";
 // import { useGetPostsQuery } from "@/store/api";
 
 export default function Posts() {
-  const [getPosts, { data, isLoading }] = useLazyGetPostsQuery();
-
-  const {
-    pagination,
-    setPagnation,
-    scrollableRef,
-    handleScroll,
-    restoreScrollPosition,
-  } = usePagination({
-    scrollDown: true,
-    fetchData: () => {
-      getPosts({ page: pagination.page });
-    },
-  });
-
-  useEffect(() => {
-    getPosts({ page: pagination.page });
-  }, []);
-
-  // const { data, isLoading } = useGetPostsQuery();
+  const [currentPage,setCurrentPage]=useState(1);
+  // console.log("page....",currentPage)
+  const { data, isLoading } = useGetPostsQuery({page:currentPage});
+  console.log(data)
+  // console.log(data?.data?.posts)
   const [posts, setPosts] = useState([]);
   const [stats, setStats] = useState({
     total: 0,
@@ -55,7 +40,8 @@ export default function Posts() {
 
   useEffect(() => {
     if (data?.success) {
-      const { pagination } = data;
+
+      // console.log("called ")
       const finalData = data?.data?.posts.map((post: any) => ({
         id: post?._id,
         title: post?.title,
@@ -73,12 +59,7 @@ export default function Posts() {
       }));
 
       setPosts(finalData);
-
-      setPagnation((prev: any) => ({
-        ...prev,
-        totalPages: pagination.totalPages,
-      }));
-      restoreScrollPosition();
+     
 
       const {
         total,
@@ -101,12 +82,12 @@ export default function Posts() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="space-y-6"
+      className="space-y-6 "
     >
       {/* Stats Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 ">
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-6 h-full overflow-auto">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
@@ -193,16 +174,20 @@ export default function Posts() {
             Manage user posts and content moderation
           </p>
         </div>
-        <div className="p-6" ref={scrollableRef} onScroll={handleScroll}>
+        <div className="p-6  " >
           <DataTable
+            totalData={data?.pagination?.count}
             data={posts}
             columns={postsColumns}
             searchable={false}
             sortable={true}
-            paginated={true}
             pageSize={20}
             isLoading={isLoading}
             className="mb-8"
+            totalPages={data?.pagination?.totalPages}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            paginated={true}
           />
         </div>
       </div>

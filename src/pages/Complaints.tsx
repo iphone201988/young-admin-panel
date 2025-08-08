@@ -15,7 +15,10 @@ import { getComplaintcolumns } from "@/columns";
 // import { useGetComplaintsQuery, useGetUsersQuery } from "@/store/api";
 
 export default function Complaints() {
-  const { data, isLoading } = useGetComplaintsQuery();
+  const [currentPage, setCurrentPage] = useState(1);
+  console.log(currentPage)
+  const { data, isLoading } = useGetComplaintsQuery({ page: currentPage });
+  console.log("complaints....", data)
   const [complaints, setComplaints] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedComplaint, setSelectedComplaint] = useState<any>(null);
@@ -144,6 +147,7 @@ export default function Complaints() {
         </div>
         <div className="p-6">
           <DataTable
+            totalData={data?.pagination?.count}
             data={complaints}
             columns={complaintsColumns}
             searchable={false}
@@ -152,6 +156,9 @@ export default function Complaints() {
             pageSize={20}
             isLoading={isLoading || updatingReport}
             className="mb-8"
+            totalPages={data?.pagination?.totalPages}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
           />
         </div>
       </div>

@@ -13,7 +13,8 @@ import { toast } from "react-toastify";
 // import { useGetAdsQuery } from "@/store/api";
 
 export default function Ads() {
-  const { data, isLoading } = useGetAllAdsQuery();
+  const [currentPage,setCurrentPage]=useState(1);
+  const { data, isLoading } = useGetAllAdsQuery({page:currentPage});
   const [ads, setAds] = useState([]);
   const [stats, setStats] = useState({
     pendingAds: 0,
@@ -157,6 +158,7 @@ export default function Ads() {
         </div>
         <div className="p-6">
           <DataTable
+          totalData={data?.pagination?.count}
             data={ads}
             columns={adsColumns}
             searchable={false}
@@ -165,6 +167,9 @@ export default function Ads() {
             pageSize={20}
             isLoading={isLoading || updatingAd}
             className="mb-8"
+            totalPages={data?.pagination?.totalPages}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
           />
         </div>
       </div>

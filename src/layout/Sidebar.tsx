@@ -77,7 +77,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                 whileTap={{ scale: 0.98 }}
                 className={cn(
                   "nav-item flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200",
-                  isActive ? "nav-item-active" : "text-muted-foreground"
+                  isActive ? "nav-item-active hover:nav-item-active" : "text-muted-foreground"
                 )}
               >
                 <item.icon size={20} />

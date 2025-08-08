@@ -9,8 +9,11 @@ import {
   ArrowUp,
   ArrowDown,
 } from "lucide-react";
+import { number } from "zod";
+import { useLocation } from "react-router";
 
 type DataTableType = {
+  totalPages: number
   data: Array<any>;
   columns: Array<any>;
   searchable: boolean;
@@ -20,6 +23,9 @@ type DataTableType = {
   className: string;
   isLoading?: boolean;
   emptyMessage?: string;
+  currentPage: number,
+  setCurrentPage: (page: number) => void;
+  totalData:number
 };
 
 // Reusable Table Component
@@ -33,9 +39,17 @@ const DataTable = ({
   className = "",
   isLoading = false,
   emptyMessage = "No data available",
+  totalPages = 1,
+  currentPage = 1,
+  setCurrentPage,
+  totalData=1,
 }: DataTableType) => {
+  let location = useLocation()
+  console.log(location?.pathname)
+  const path=location?.pathname
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+
+
   const [sortConfig, setSortConfig] = useState<any>({
     key: null,
     direction: "asc",
@@ -52,6 +66,7 @@ const DataTable = ({
       })
     );
   }, [data, searchTerm, columns, searchable]);
+  
 
   // Sort data
   const sortedData = useMemo(() => {
@@ -66,16 +81,18 @@ const DataTable = ({
       return 0;
     });
   }, [filteredData, sortConfig, sortable]);
-
+  
+const paginatedData=sortedData
   // Paginate data
-  const paginatedData = useMemo(() => {
-    if (!paginated) return sortedData;
+  // const paginatedData = useMemo(() => {
+  //   if (!paginated) return sortedData;
 
-    const startIndex = (currentPage - 1) * pageSize;
-    return sortedData.slice(startIndex, startIndex + pageSize);
-  }, [sortedData, currentPage, pageSize, paginated]);
-
-  const totalPages = Math.ceil(sortedData.length / pageSize);
+  //   const startIndex = (currentPage - 1) * pageSize;
+  //   return sortedData.slice(startIndex, startIndex + pageSize);
+  // }, [sortedData, currentPage, pageSize, paginated]);
+  // console.log("pagintedData...",paginatedData)
+  // console.log("sorted data...", sortedData.length, "pageszie..", pageSize)
+  // const totalPages = Math.ceil(sortedData.length / pageSize);
 
   const handleSort = (key: any) => {
     if (!sortable) return;
@@ -88,6 +105,7 @@ const DataTable = ({
           : "asc",
     }));
   };
+  console.log(totalPages)
 
   const getSortIcon = (columnKey: any) => {
     if (!sortable) return null;
@@ -99,10 +117,10 @@ const DataTable = ({
       <ArrowDown className="w-4 h-4" />
     );
   };
-
   const goToPage = (page: any) => {
     setCurrentPage(Math.max(1, Math.min(page, totalPages)));
   };
+  console.log("currentPage" ,currentPage)
 
   if (isLoading) {
     return (
@@ -115,7 +133,7 @@ const DataTable = ({
 
   return (
     <div
-      className={`bg-white shadow-lg rounded-lg  ${className}`}
+      className={`bg-white shadow-lg rounded-lg  ${className} `}
     >
       {/* Search Bar */}
       {searchable && (
@@ -134,21 +152,20 @@ const DataTable = ({
       )}
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className={`overflow-x-auto  ${location.pathname === "/users" ? "h-[30rem]" : "h-[20rem]"}`}>
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
               {columns.map((column: any, index) => (
                 <th
                   key={index}
-                  className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
-                    sortable && column.accessor
+                  className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${sortable && column.accessor
                       ? "cursor-pointer hover:bg-gray-100"
                       : ""
-                  }`}
+                    }`}
                   onClick={() => column.accessor && handleSort(column.accessor)}
                 >
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center space-x-1 ">
                     <span>{column.header}</span>
                     {column.accessor && getSortIcon(column.accessor)}
                   </div>
@@ -156,7 +173,7 @@ const DataTable = ({
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200 h-full overflow-auto no-scrollbar">
+          <tbody className="bg-white divide-y divide-gray-200 h-full overflow-scroll no-scrollbar ">
             {paginatedData.length === 0 ? (
               <tr>
                 <td
@@ -188,11 +205,11 @@ const DataTable = ({
 
       {/* Pagination */}
       {paginated && totalPages > 1 && (
-        <div className="px-6 py-3 border-t border-gray-200 flex items-center justify-between">
+        <div className="px-6 py-3 border-t border-gray-200 flex items-center justify-between ">
           <div className="text-sm text-gray-700">
-            Showing {(currentPage - 1) * pageSize + 1} to{" "}
-            {Math.min(currentPage * pageSize, sortedData.length)} of{" "}
-            {sortedData.length} results
+            Showing {(currentPage - 1) * pageSize + 1} to {(currentPage - 1) * pageSize  +paginatedData.length +" "} 
+              of{" "}
+            {totalData} results
           </div>
           <div className="flex items-center space-x-2">
             <button

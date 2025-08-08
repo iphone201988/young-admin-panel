@@ -13,12 +13,14 @@ import { userRole } from "@/lib/utils";
 import { userColumns } from "@/columns";
 
 const Users = () => {
+  const [currentPage,setCurrentPage]=useState(1);
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
 
-  const { data, isLoading } = useGetAllUsersQuery();
-
+  const { data, isLoading } = useGetAllUsersQuery({page:currentPage });
+  
   useEffect(() => {
+    console.log("users....", data)
     if (data?.success) {
       const finalData = data?.data?.users?.map((user: any) => ({
         id: user._id,
@@ -50,6 +52,7 @@ const Users = () => {
           </div>
           <div className="p-6">
             <DataTable
+            totalData={data?.pagination?.count}
               data={users}
               columns={userColumns}
               searchable={false}
@@ -58,6 +61,9 @@ const Users = () => {
               pageSize={20}
               isLoading={isLoading}
               className="mb-8"
+              totalPages={data?.pagination?.totalPages}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
             />
           </div>
         </div>

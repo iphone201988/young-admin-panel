@@ -33,9 +33,9 @@ export const youngApi: any = createApi({
         method: "GET",
       }),
     }),
-    getAllUsers: builder.query<any, void>({
-      query: () => ({
-        url: `getAllUsers`,
+    getAllUsers: builder.query<any, any>({
+      query: ({page=1}) => ({
+        url: `getAllUsers?page=${page}`,
         method: "GET",
       }),
       providesTags: [USERS_TAG],
@@ -70,23 +70,23 @@ export const youngApi: any = createApi({
       }),
       invalidatesTags: [COMPLAINTS],
     }),
-    getComplaints: builder.query<any, void>({
-      query: () => ({
-        url: `getAllUserComplaints`,
+    getComplaints: builder.query<any, any>({
+      query: ({page=1}) => ({
+        url: `getAllUserComplaints?page=${page}`,
         method: "GET",
       }),
       providesTags: [COMPLAINTS],
     }),
     getPosts: builder.query<any, any>({
-      query: ({ page = 1 }) => ({
+      query: ({page}) => ({
         url: `getPosts?page=${page}`,
         method: "GET",
       }),
       providesTags: [POSTS],
     }),
-    getAllAds: builder.query<any, void>({
-      query: () => ({
-        url: `getAllAds`,
+    getAllAds: builder.query<any, any>({
+      query: ({page=1}) => ({
+        url: `getAllAds?page=${page}`,
         method: "GET",
       }),
       providesTags: [ADS],
