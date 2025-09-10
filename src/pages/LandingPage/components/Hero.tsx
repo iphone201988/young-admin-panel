@@ -3,7 +3,7 @@ import appStoreImg from "../../../assets/apple.png";
 
 const Hero = () => {
   return (
-    <section className="pt-20 pb-16 bg-gradient-to-br from-white to-purple-50">
+    <section className="pt-20 pb-16 bg-gradient-to-br from-white to-purple-50 mt-[20px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
