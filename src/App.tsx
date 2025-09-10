@@ -10,28 +10,32 @@ import Ads from "@/pages/Ads";
 import Messaging from "@/pages/Messaging";
 import Settings from "./pages/Settings";
 import LoginPage from "./pages/Login";
+import LandingPage from "./pages/LandingPage";
 // import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/admin/login" element={<LoginPage />} />
+        <Route path="/admin" element={<Layout />}>
           <Route index element={<Dashboard />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/complaints" element={<Complaints />} />
-          <Route path="/posts" element={<Posts />} />
-          <Route path="/ads" element={<Ads />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="users" element={<Users />} />
+          <Route path="complaints" element={<Complaints />} />
+          <Route path="posts" element={<Posts />} />
+          <Route path="ads" element={<Ads />} />
+          <Route path="settings" element={<Settings />} />
           {/* <Route path="/messaging" element={<Messaging />} /> */}
           {/* <Route path="/users" component={Users} />
         <Route path="/complaints" component={Complaints} />
         <Route path="/posts" component={Posts} />
         <Route path="/ads" component={Ads} />
         <Route path="/messaging" component={Messaging} />
-        <Route component={NotFound} /> */}
+         {/* <Route component={NotFound} />
+         */}
         </Route>
+        <Route path="*" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );

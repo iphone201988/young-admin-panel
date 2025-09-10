@@ -33,7 +33,7 @@ const LoginPage = () => {
       const { token } = data?.data;
       sessionStorage.setItem("token", token);
       toast.success(data?.message);
-      navigate("/", { replace: true });
+      navigate("/admin", { replace: true });
     }
   }, [data]);
 

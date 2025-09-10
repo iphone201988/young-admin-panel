@@ -34,7 +34,7 @@ const pageConfig = {
 export default function Layout() {
   const token = sessionStorage.getItem("token");
   if (!token) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/admin/login" replace />;
   }
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const location = useLocation();

@@ -16,13 +16,18 @@ import {
 import { Link, useLocation } from "react-router";
 
 const navigationItems = [
-  { icon: LayoutDashboard, label: "Dashboard", href: "/" },
-  { icon: Users, label: "User Management", href: "/users" },
-  { icon: Flag, label: "Complaints", href: "/complaints", badge: "" },
-  { icon: FileText, label: "Posts", href: "/posts" },
-  { icon: Megaphone, label: "Megaphone Approval", href: "/ads", badge: "" },
+  { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
+  { icon: Users, label: "User Management", href: "/admin/users" },
+  { icon: Flag, label: "Complaints", href: "/admin/complaints", badge: "" },
+  { icon: FileText, label: "Posts", href: "/admin/posts" },
+  {
+    icon: Megaphone,
+    label: "Megaphone Approval",
+    href: "/admin/ads",
+    badge: "",
+  },
   // { icon: MessageSquare, label: "Messaging", href: "/messaging" },
-  { icon: Settings, label: "Settings", href: "/settings" },
+  { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
 
 interface SidebarProps {
@@ -53,7 +58,9 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
               transition={{ duration: 0.2 }}
               className="sidebar-logo-text"
             >
-              <h1 className="text-xl font-bold text-foreground">Young Admin Panel</h1>
+              <h1 className="text-xl font-bold text-foreground">
+                Young Admin Panel
+              </h1>
               <p className="text-sm text-muted-foreground">Management System</p>
             </motion.div>
           )}
@@ -77,7 +84,9 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                 whileTap={{ scale: 0.98 }}
                 className={cn(
                   "nav-item flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200",
-                  isActive ? "nav-item-active hover:nav-item-active" : "text-muted-foreground"
+                  isActive
+                    ? "nav-item-active hover:nav-item-active"
+                    : "text-muted-foreground"
                 )}
               >
                 <item.icon size={20} />

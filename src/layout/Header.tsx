@@ -19,7 +19,7 @@ interface HeaderProps {
 export default function Header({ title, subtitle, onMenuClick }: HeaderProps) {
   const handleLogout = () => {
     sessionStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/admin/login";
   };
 
   return (
