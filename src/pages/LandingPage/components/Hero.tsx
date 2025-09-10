@@ -61,7 +61,7 @@ const Hero = () => {
                 className="rounded-2xl shadow-2xl"
               />
             </div> */}
-            <div className="absolute top-4 -right-4 bg-white rounded-xl p-4 shadow-lg">
+            {/* <div className="absolute top-4 -right-4 bg-white rounded-xl p-4 shadow-lg">
               <div className="flex items-center space-x-3">
                 <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
                 <span className="text-sm font-semibold text-gray-700">
@@ -75,7 +75,7 @@ const Hero = () => {
                 Today's Engagement
               </div>
               <div className="text-2xl font-bold text-[#7030A0] mt-1">+47%</div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
