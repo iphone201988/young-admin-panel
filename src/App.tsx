@@ -10,6 +10,8 @@ import Ads from "@/pages/Ads";
 import Messaging from "@/pages/Messaging";
 import Settings from "./pages/Settings";
 import LoginPage from "./pages/Login";
+import UploadMedia from "./pages/UploadMedia";
+import FinancialSocialNetwork from "./pages/Home2";
 import LandingPage from "./pages/LandingPage";
 // import NotFound from "@/pages/not-found";
 
@@ -26,6 +28,7 @@ function Router() {
           <Route path="posts" element={<Posts />} />
           <Route path="ads" element={<Ads />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="upload-media" element={<UploadMedia />} />
           {/* <Route path="/messaging" element={<Messaging />} /> */}
           {/* <Route path="/users" component={Users} />
         <Route path="/complaints" component={Complaints} />

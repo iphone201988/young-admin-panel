@@ -80,19 +80,19 @@
   .table-row:hover {
     @apply bg-muted/50 transition-colors duration-200;
   }
-  
+
   .sidebar-collapsed .sidebar-text {
     @apply hidden;
   }
-  
+
   .sidebar-collapsed .sidebar-logo-text {
     @apply hidden;
   }
-  
+
   .nav-item-active {
     @apply bg-primary text-primary-foreground;
   }
-  
+
   .nav-item {
     @apply transition-all duration-200 hover:bg-accent hover:text-accent-foreground;
   }
@@ -102,11 +102,11 @@
   .animate-slide-in {
     animation: slideIn 0.3s ease-out;
   }
-  
+
   .animate-fade-in {
     animation: fadeIn 0.2s ease-out;
   }
-  
+
   .animate-bounce-in {
     animation: bounceIn 0.5s ease-out;
   }
@@ -147,4 +147,25 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scroll-bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.faq-item .faq-arrow {
+  transition: transform 0.22s ease;
+}
+.faq-item.open .faq-arrow {
+  transform: rotate(180deg);
+}
+.faq-item.open .faq-question span {
+  color: #7030a0;
+  font-weight: 600;
+}
+.tab.active {
+  border-color: #7030a0;
 }

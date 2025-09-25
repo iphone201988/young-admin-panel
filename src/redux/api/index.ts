@@ -106,6 +106,13 @@ export const youngApi: any = createApi({
         body,
       }),
     }),
+    uploadMedia: builder.mutation<any, FormData>({
+      query: (formData) => ({
+        url: `uploadMedia`,
+        method: "POST",
+        body: formData,
+      }),
+    }),
   }),
 });
 
@@ -121,4 +128,5 @@ export const {
   useUpdateReportStatusMutation,
   useUpdateAdStatusMutation,
   useChangePasswordMutation,
+  useUploadMediaMutation,
 } = youngApi;

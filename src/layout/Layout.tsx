@@ -4,28 +4,32 @@ import Header from "./Header";
 import { Navigate, Outlet, useLocation } from "react-router";
 
 const pageConfig = {
-  "/": { title: "Dashboard", subtitle: "Overview of your admin panel" },
-  "/users": {
+  "/admin": { title: "Dashboard", subtitle: "Overview of your admin panel" },
+  "/admin/users": {
     title: "User Management",
     subtitle: "Manage users, verification, and compliance",
   },
-  "/complaints": {
+  "/admin/complaints": {
     title: "Complaints",
     subtitle: "Handle user reports and compliance issues",
   },
-  "/posts": {
+  "/admin/posts": {
     title: "Posts",
     subtitle: "Manage user posts and content moderation",
   },
-  "/ads": {
+  "/admin/ads": {
     title: "Ad Approval",
     subtitle: "Review and approve advertisement submissions",
   },
-  "/messaging": {
+  "/admin/upload-media": {
+    title: "Upload Media",
+    subtitle: "Upload images with optional source link",
+  },
+  "/admin/messaging": {
     title: "Messaging",
     subtitle: "Send messages to users individually or in bulk",
   },
-  "/settings": {
+  "/admin/settings": {
     title: "Settings",
     subtitle: "Change your password",
   },
@@ -40,7 +44,7 @@ export default function Layout() {
   const location = useLocation();
 
   const currentPage =
-    pageConfig[location.pathname as keyof typeof pageConfig] || pageConfig["/"];
+    pageConfig[location.pathname as keyof typeof pageConfig] || pageConfig["/admin"];
 
   useEffect(() => {
     const handleResize = () => {

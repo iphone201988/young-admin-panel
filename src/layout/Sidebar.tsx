@@ -8,6 +8,7 @@ import {
   Flag,
   FileText,
   Megaphone,
+  Image as ImageIcon,
   MessageSquare,
   Settings,
   Menu,
@@ -26,6 +27,7 @@ const navigationItems = [
     href: "/admin/ads",
     badge: "",
   },
+  { icon: ImageIcon, label: "Upload Media", href: "/admin/upload-media" },
   // { icon: MessageSquare, label: "Messaging", href: "/messaging" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
