@@ -11,6 +11,8 @@ import Messaging from "@/pages/Messaging";
 import Settings from "./pages/Settings";
 import LoginPage from "./pages/Login";
 import UploadMedia from "./pages/UploadMedia";
+import DeleteAccount from "./pages/DeleteAccount";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import FinancialSocialNetwork from "./pages/Home2";
 import LandingPage from "./pages/LandingPage";
 // import NotFound from "@/pages/not-found";
@@ -20,6 +22,8 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/delete-account" element={<DeleteAccount />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/admin/login" element={<LoginPage />} />
         <Route path="/admin" element={<Layout />}>
           <Route index element={<Dashboard />} />

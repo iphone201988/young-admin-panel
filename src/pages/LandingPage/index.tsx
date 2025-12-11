@@ -530,7 +530,7 @@ const LandingPage = () => {
           />
           <div className="flex gap-8 sm:gap-4 cursor-pointer flex-wrap justify-center">
             <p>About</p>
-            <p>Privacy Policy</p>
+            <a href="/privacy-policy" className="hover:text-[#7030A0]">Privacy Policy</a>
             <p>Terms</p>
             <p>Contact</p>
           </div>
