@@ -523,11 +523,14 @@ const LandingPage = () => {
       {/* Footer */}
       <footer className="bg-white">
         <div className="px-10 sm:px-5 py-5 flex flex-col md:flex-row items-center justify-between text-[#414141] gap-4">
-          <img
-            src="assets/images/logo.png"
-            alt=""
-            className="w-full max-w-[40px] ml-5"
-          />
+          <div className="flex items-center gap-2">
+            <img
+              src="assets/images/logo.png"
+              alt=""
+              className="w-full max-w-[40px] ml-5"
+            />
+            <span className="text-xl font-bold text-[#7030A0]">Boom</span>
+          </div>
           <div className="flex gap-8 sm:gap-4 cursor-pointer flex-wrap justify-center">
             <p>About</p>
             <a href="/privacy-policy" className="hover:text-[#7030A0]">Privacy Policy</a>
@@ -541,7 +544,7 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="bg-[#7030A0] py-2">
-          <p className="text-center text-white m-0">All Rights Reserved</p>
+          <p className="text-center text-white m-0">© 2005 All Rights Reserved</p>
         </div>
       </footer>
     </div>

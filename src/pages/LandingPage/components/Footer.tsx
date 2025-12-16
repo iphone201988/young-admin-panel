@@ -23,7 +23,7 @@ const Footer = () => {
               <div className="bg-gradient-to-r from-[#7030A0] to-purple-600 p-2 rounded-lg mr-3">
                   <img src={logo} alt="Logo" className="h-6 w-6 object-contain" />
               </div>
-              <h1 className="text-2xl font-bold">TheBoom</h1>
+              <h1 className="text-2xl font-bold">Boom</h1>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
               The premier financial social networking platform connecting professionals, 
@@ -68,38 +68,13 @@ const Footer = () => {
           </div> */}
         </div>
 
-        {/* <div className="border-t border-gray-800 mt-12 pt-8">
-          <div className="flex flex-col lg:flex-row justify-between items-center">
-            <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8 mb-6 lg:mb-0">
-              <div className="flex items-center text-gray-400">
-                <Mail className="h-4 w-4 mr-2" />
-                <span>support@finconnect.com</span>
-              </div>
-              <div className="flex items-center text-gray-400">
-                <Phone className="h-4 w-4 mr-2" />
-                <span>1-800-FINCONN</span>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <span className="text-gray-400 text-sm">Download our app:</span>
-              <button className="flex items-center bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
-                <Apple className="h-5 w-5 mr-2" />
-                <span className="text-sm">App Store</span>
-              </button>
-              <button className="flex items-center bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
-                <Smartphone className="h-5 w-5 mr-2" />
-                <span className="text-sm">Google Play</span>
-              </button>
-            </div>
-          </div>
-          
-          <div className="text-center lg:text-left mt-6 pt-6 border-t border-gray-800">
+        <div className="border-t border-gray-800 mt-12 pt-8">
+          <div className="text-center">
             <p className="text-gray-400 text-sm">
-              © 2025 TheBoom. All rights reserved. | Connecting financial professionals worldwide.
+              © 2005 Boom. All rights reserved. | Connecting financial professionals worldwide.
             </p>
           </div>
-        </div> */}
+        </div>
       </div>
     </footer>
   );
