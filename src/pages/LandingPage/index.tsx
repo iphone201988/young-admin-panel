@@ -45,6 +45,7 @@ import appStoreImg from "../../assets/apple.png";
 const LandingPage = () => {
   const [activeTab, setActiveTab] = useState("general");
   const [openFaq, setOpenFaq] = useState(null);
+  const [showAllFeatures, setShowAllFeatures] = useState(false);
 
   const scrollCarousel = (direction: any) => {
     const carousel: any = document.getElementById("carousel");
@@ -221,19 +222,35 @@ const LandingPage = () => {
         <p className="text-[#7030A0] text-center w-full text-3xl sm:text-2xl mb-10">
           Core Features
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[60px] gap-y-[40px] justify-items-center">
-          {coreFeatures.map((feature, index) => (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-x-[60px] sm:gap-y-[40px] gap-y-4 justify-items-center w-full max-w-6xl">
+          {(showAllFeatures ? coreFeatures : coreFeatures.slice(0, 6)).map((feature, index) => (
             <div
               key={index}
-              className="w-full h-full bg-white hover:bg-[#F8F8F8] transition rounded-xl p-5 flex flex-col items-center"
+              className="w-full bg-white hover:bg-[#F8F8F8] transition rounded-xl p-3 sm:p-5 flex flex-col items-center"
             >
-              <img src={feature.icon} alt="" className="w-12 h-12" />
-              <p className="mt-3 text-[18px] text-[#555555] text-center font-semibold max-w-[235px]">
+              <img src={feature.icon} alt="" className="w-8 h-8 sm:w-12 sm:h-12" />
+              <p className="mt-2 sm:mt-3 text-xs sm:text-[18px] text-[#555555] text-center font-semibold max-w-[235px] leading-tight">
                 {feature.text}
               </p>
             </div>
           ))}
         </div>
+        {!showAllFeatures && coreFeatures.length > 6 && (
+          <button
+            onClick={() => setShowAllFeatures(true)}
+            className="mt-6 sm:hidden bg-[#7030A0] text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-[#5a2580] transition-colors"
+          >
+            View All {coreFeatures.length} Features
+          </button>
+        )}
+        {showAllFeatures && (
+          <button
+            onClick={() => setShowAllFeatures(false)}
+            className="mt-6 sm:hidden bg-[#7030A0] text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-[#5a2580] transition-colors"
+          >
+            Show Less
+          </button>
+        )}
         <p className="text-[#7030A0] mt-10 mb-0 text-center text-base">
           <strong>Note:</strong> General members with Premium can only view the
           Streams. All other Members with Premium can view and post Streams.
@@ -544,7 +561,7 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="bg-[#7030A0] py-2">
-          <p className="text-center text-white m-0">© 2005 All Rights Reserved</p>
+          <p className="text-center text-white m-0">© 2026 All Rights Reserved</p>
         </div>
       </footer>
     </div>
