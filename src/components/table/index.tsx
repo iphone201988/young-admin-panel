@@ -154,7 +154,7 @@ const paginatedData=sortedData
       {/* Table */}
       <div className={`overflow-x-auto  ${location.pathname === "/users" ? "h-[30rem]" : "h-[20rem]"}`}>
         <table className="w-full">
-          <thead className="bg-gray-50">
+          <thead className="bg-gray-50 sticky top-0">
             <tr>
               {columns.map((column: any, index) => (
                 <th
