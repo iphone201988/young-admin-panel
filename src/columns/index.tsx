@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import SelectBox from "@/components/select";
 import { useUpdateUserStatusMutation } from "@/redux/api";
 import * as Switch from "@radix-ui/react-switch";
@@ -58,6 +59,14 @@ export const userColumns = [
   {
     header: "ID",
     accessor: "id",
+    render: (value: any, row: any) => (
+      <Link
+        to={`/admin/users/${row.id}`}
+        className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
+      >
+        {value}
+      </Link>
+    ),
   },
   {
     header: "Name",
@@ -103,6 +112,30 @@ export const getComplaintcolumns = (handleComplainEdit: any) => [
   {
     header: "ID",
     accessor: "id",
+    render: (value: any, row: any) => (
+      <Link
+        to={`/admin/complaints/${row.id}`}
+        state={{ complaint: row }}
+        className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
+      >
+        {value}
+      </Link>
+    ),
+  },
+  {
+    header: "Reported User ID",
+    accessor: "reportedUserId",
+    render: (value: any, row: any) =>
+      value ? (
+        <Link
+          to={`/admin/users/${value}`}
+          className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
+        >
+          {value}
+        </Link>
+      ) : (
+        "—"
+      ),
   },
   {
     header: "Reported User",
@@ -155,10 +188,23 @@ export const getPostsColumns = (handlePostView: any) => [
   {
     header: "Post ID",
     accessor: "id",
+    render: (value: any, row: any) => (
+      <Link
+        to={`/admin/posts/${row.id}`}
+        state={{ post: row }}
+        className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
+      >
+        {value}
+      </Link>
+    ),
   },
   {
     header: "Title",
     accessor: "title",
+  },
+  {
+    header: "Author User ID",
+    accessor: "authorUserId",
   },
   {
     header: "Author",
@@ -175,14 +221,13 @@ export const getPostsColumns = (handlePostView: any) => [
   {
     header: "Actions",
     render: (value: any, row: any) => (
-      <div className="flex space-x-2">
-        <button
-          className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-          onClick={() => handlePostView(row.id)}
-        >
-          View
-        </button>
-      </div>
+      <Link
+        to={`/admin/posts/${row.id}`}
+        state={{ post: row }}
+        className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+      >
+        View
+      </Link>
     ),
   },
 ];

@@ -55,7 +55,7 @@ const LoginPage = () => {
                 <Shield className="w-8 h-8 text-white" />
               </div>
               <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                Young Admin Panel
+              The Boom Admin
               </h1>
               <p className="text-gray-600">Sign in to your management system</p>
             </div>

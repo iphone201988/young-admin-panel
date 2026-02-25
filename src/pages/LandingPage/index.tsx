@@ -41,6 +41,7 @@ import Frame8 from "../../assets/Frame-8.png";
 
 import playStoreImg from "../../assets/play.png";
 import appStoreImg from "../../assets/apple.png";
+import appStoreComingSoonImg from "../../assets/apple1.png";
 
 const LandingPage = () => {
   const [activeTab, setActiveTab] = useState("general");
@@ -137,28 +138,28 @@ const LandingPage = () => {
               financial news – all in one place.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
-              <a
+              {/* <a
                 href="https://play.google.com/store"
                 target="_blank"
                 rel="noopener noreferrer"
-              >
+              > */}
                 <img
                   src={playStoreImg}
                   alt="Get it on Google Play"
-                  className="h-14 hover:scale-105 transition-transform"
+                  className="h-14 hover:scale-105 transition-transform cursor-pointer"
                 />
-              </a>
-              <a
+              {/* </a> */}
+              {/* <a
                 href="https://www.apple.com/app-store/"
                 target="_blank"
                 rel="noopener noreferrer"
-              >
+              > */}
                 <img
-                  src={appStoreImg}
+                  src={appStoreComingSoonImg}
                   alt="Download on the App Store"
-                  className="h-14 hover:scale-105 transition-transform"
+                  className="h-14 hover:scale-105 transition-transform cursor-pointer rounded-lg"
                 />
-              </a>
+              {/* </a> */}
             </div>
           </div>
           <div className="md:mr-10">

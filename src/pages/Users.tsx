@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Plus } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import UserTable from "@/components/users/UserTable";
-import CRDVerificationTable from "@/components/crd/CRDVerificationTable";
-import PaymentLogsTable from "@/components/payments/PaymentLogsTable";
 import AddUserModal from "@/components/users/AddUserModal";
 import DataTable from "@/components/table";
 import { useGetAllUsersQuery } from "@/redux/api";
 import { userRole } from "@/lib/utils";
 import { userColumns } from "@/columns";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
 const Users = () => {
-  const [currentPage,setCurrentPage]=useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchUserId, setSearchUserId] = useState("");
+  const debouncedSearch = useDebouncedValue(searchUserId.trim(), 400);
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
 
-  const { data, isLoading } = useGetAllUsersQuery({page:currentPage });
+  const { data, isLoading } = useGetAllUsersQuery({
+    page: currentPage,
+    userId: debouncedSearch || undefined,
+  });
   
   useEffect(() => {
-    console.log("users....", data)
     if (data?.success) {
       const finalData = data?.data?.users?.map((user: any) => ({
         id: user._id,
@@ -47,8 +48,21 @@ const Users = () => {
       {/* Main Content Tabs */}
       <div className="bg-white rounded-xl shadow-sm border border-border overflow-hidden">
         <div className="bg-white rounded-xl shadow-sm border border-border overflow-hidden">
-          <div className="p-6 border-b border-border">
+          <div className="p-6 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <h3 className="text-lg font-semibold">All Users</h3>
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search by User ID"
+                value={searchUserId}
+                onChange={(e) => {
+                  setSearchUserId(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="w-full pl-9 pr-4 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
           </div>
           <div className="p-6">
             <DataTable

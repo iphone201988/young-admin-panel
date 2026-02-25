@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, CheckCircle2, Clock } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AlertTriangle, CheckCircle2, Clock, Search } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import ComplaintsTable from "@/components/complaints/ComplaintsTable";
 import {
   useGetComplaintsQuery,
   useUpdateReportStatusMutation,
@@ -12,13 +11,16 @@ import DataTable from "@/components/table";
 import moment from "moment";
 import ComplaintModal from "@/components/EditProfilePopup";
 import { getComplaintcolumns } from "@/columns";
-// import { useGetComplaintsQuery, useGetUsersQuery } from "@/store/api";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
 export default function Complaints() {
   const [currentPage, setCurrentPage] = useState(1);
-  console.log(currentPage)
-  const { data, isLoading } = useGetComplaintsQuery({ page: currentPage });
-  console.log("complaints....", data)
+  const [searchUserId, setSearchUserId] = useState("");
+  const debouncedSearch = useDebouncedValue(searchUserId.trim(), 400);
+  const { data, isLoading } = useGetComplaintsQuery({
+    page: currentPage,
+    userId: debouncedSearch || undefined,
+  });
   const [complaints, setComplaints] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedComplaint, setSelectedComplaint] = useState<any>(null);
@@ -52,6 +54,7 @@ export default function Complaints() {
         user: complaint?.userId?.firstName
           ? complaint?.userId?.firstName + " " + complaint?.userId?.lastName
           : "",
+        reportedUserId: complaint?.userId?._id ?? "",
         reporter:
           complaint?.reporterUserId?.firstName +
           " " +
@@ -141,9 +144,22 @@ export default function Complaints() {
             complaint={selectedComplaint}
             onStatusChange={handleStatusChange}
           />
-        )}{" "}
-        <div className="p-6 border-b border-border">
+        )}
+        <div className="p-6 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <h3 className="text-lg font-semibold">All Complaints</h3>
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search by User ID"
+              value={searchUserId}
+              onChange={(e) => {
+                setSearchUserId(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="w-full pl-9 pr-4 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
         </div>
         <div className="p-6">
           <DataTable

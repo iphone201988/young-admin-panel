@@ -1,22 +1,23 @@
 import { motion } from "framer-motion";
-import { FileText, Trash2, Flag, Share2 } from "lucide-react";
+import { FileText, Trash2, Flag, Share2, Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import PostsTable from "@/components/posts/PostsTable";
-import { useGetPostsQuery, useLazyGetPostsQuery } from "@/redux/api";
+import { useGetPostsQuery } from "@/redux/api";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import DataTable from "@/components/table";
 import { getPostsColumns } from "@/columns";
 import PostModal from "@/components/PostModal";
-import { usePagination } from "@/hooks/usePagination";
-// import { useGetPostsQuery } from "@/store/api";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
 export default function Posts() {
-  const [currentPage,setCurrentPage]=useState(1);
-  // console.log("page....",currentPage)
-  const { data, isLoading } = useGetPostsQuery({page:currentPage});
-  console.log(data)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchUserId, setSearchUserId] = useState("");
+  const debouncedSearch = useDebouncedValue(searchUserId.trim(), 400);
+  const { data, isLoading } = useGetPostsQuery({
+    page: currentPage,
+    userId: debouncedSearch || undefined,
+  });
   // console.log(data?.data?.posts)
   const [posts, setPosts] = useState([]);
   const [stats, setStats] = useState({
@@ -48,10 +49,12 @@ export default function Posts() {
         author: post?.userId?.firstName
           ? post?.userId?.firstName + " " + post?.userId?.lastName
           : "",
+        authorUserId: post?.userId?._id ?? "",
         description:
           post?.description?.length > 30
             ? post.description.substring(0, 30) + "..."
             : post?.description,
+        fullDescription: post?.description ?? "",
         createdAt: moment(post?.createdAt).format("YYYY-MM-DD"),
         symbol: post?.symbol,
         topic: post?.topic,
@@ -168,11 +171,26 @@ export default function Posts() {
           />
         )}
 
-        <div className="p-6 border-b border-border">
-          <h3 className="text-lg font-semibold">All Posts</h3>
-          <p className="text-sm text-muted-foreground">
-            Manage user posts and content moderation
-          </p>
+        <div className="p-6 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h3 className="text-lg font-semibold">All Posts</h3>
+            <p className="text-sm text-muted-foreground">
+              Manage user posts and content moderation
+            </p>
+          </div>
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search by User ID"
+              value={searchUserId}
+              onChange={(e) => {
+                setSearchUserId(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="w-full pl-9 pr-4 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
         </div>
         <div className="p-6  " >
           <DataTable

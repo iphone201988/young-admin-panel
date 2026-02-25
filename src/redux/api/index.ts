@@ -34,8 +34,16 @@ export const youngApi: any = createApi({
       }),
     }),
     getAllUsers: builder.query<any, any>({
-      query: ({page=1}) => ({
-        url: `getAllUsers?page=${page}`,
+      query: ({ page = 1, userId }) => {
+        const params = new URLSearchParams({ page: String(page) });
+        if (userId?.trim()) params.append("userId", userId.trim());
+        return { url: `getAllUsers?${params.toString()}`, method: "GET" };
+      },
+      providesTags: [USERS_TAG],
+    }),
+    getUserById: builder.query<any, string>({
+      query: (id) => ({
+        url: `getUserById/${id}`,
         method: "GET",
       }),
       providesTags: [USERS_TAG],
@@ -71,17 +79,19 @@ export const youngApi: any = createApi({
       invalidatesTags: [COMPLAINTS],
     }),
     getComplaints: builder.query<any, any>({
-      query: ({page=1}) => ({
-        url: `getAllUserComplaints?page=${page}`,
-        method: "GET",
-      }),
+      query: ({ page = 1, userId }) => {
+        const params = new URLSearchParams({ page: String(page) });
+        if (userId?.trim()) params.append("userId", userId.trim());
+        return { url: `getAllUserComplaints?${params.toString()}`, method: "GET" };
+      },
       providesTags: [COMPLAINTS],
     }),
     getPosts: builder.query<any, any>({
-      query: ({page}) => ({
-        url: `getPosts?page=${page}`,
-        method: "GET",
-      }),
+      query: ({ page = 1, userId }) => {
+        const params = new URLSearchParams({ page: String(page) });
+        if (userId?.trim()) params.append("userId", userId.trim());
+        return { url: `getPosts?${params.toString()}`, method: "GET" };
+      },
       providesTags: [POSTS],
     }),
     getAllAds: builder.query<any, any>({
@@ -120,6 +130,7 @@ export const {
   useAdminLoginMutation,
   useGetDashboardStatsQuery,
   useGetAllUsersQuery,
+  useGetUserByIdQuery,
   useGetComplaintsQuery,
   useGetPostsQuery,
   useLazyGetPostsQuery,

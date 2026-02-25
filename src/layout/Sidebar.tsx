@@ -44,7 +44,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
     <motion.div
       animate={{ width: collapsed ? 80 : 320 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="bg-white shadow-lg border-r border-sidebar-border flex flex-col h-screen"
+      className="fixed left-0 top-0 z-10 bg-white shadow-lg border-r border-sidebar-border flex flex-col h-screen"
     >
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-sidebar-border">
@@ -61,7 +61,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
               className="sidebar-logo-text"
             >
               <h1 className="text-xl font-bold text-foreground">
-                Young Admin Panel
+                The Boom Admin
               </h1>
               <p className="text-sm text-muted-foreground">Management System</p>
             </motion.div>
