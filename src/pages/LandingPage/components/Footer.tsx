@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router";
 import { 
   TrendingUp, 
   Mail, 
@@ -29,7 +30,7 @@ const Footer = () => {
               The premier financial social networking platform connecting professionals, 
               sharing insights, and building the future of finance together.
             </p>
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-[#7030A0] transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
@@ -42,7 +43,7 @@ const Footer = () => {
               <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-[#7030A0] transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-            </div>
+            </div> */}
           </div>
 
           {/* <div>
@@ -69,10 +70,32 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8">
-          <div className="text-center">
-            <p className="text-gray-400 text-sm">
-              © 2005 Boom. All rights reserved. | Connecting financial professionals worldwide.
-            </p>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-400">
+            {/* <p className="text-center sm:text-left">
+              © 2026 Boom. All rights reserved. Connecting financial professionals worldwide.
+            </p> */}
+            <div className="flex items-center gap-4">
+              <Link
+                to="/about"
+                className="hover:text-white transition-colors"
+              >
+                About
+              </Link>
+              <span className="h-4 w-px bg-gray-700 hidden sm:inline-block" />
+              <Link
+                to="/privacy-policy"
+                className="hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <span className="h-4 w-px bg-gray-700 hidden sm:inline-block" />
+              <Link
+                to="/terms"
+                className="hover:text-white transition-colors"
+              >
+                Terms of Use
+              </Link>
+            </div>
           </div>
         </div>
       </div>

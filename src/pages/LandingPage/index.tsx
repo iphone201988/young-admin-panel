@@ -39,14 +39,47 @@ import Frame6 from "../../assets/Frame-6.png";
 import Frame7 from "../../assets/Frame-7.png";
 import Frame8 from "../../assets/Frame-8.png";
 
-import playStoreImg from "../../assets/play.png";
+import playStoreImg from "../../assets/playstore.png";
 import appStoreImg from "../../assets/apple.png";
-import appStoreComingSoonImg from "../../assets/apple1.png";
+import appStoreComingSoonImg from "../../assets/appstore.png";
 
 const LandingPage = () => {
   const [activeTab, setActiveTab] = useState("general");
   const [openFaq, setOpenFaq] = useState(null);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
+  const [subscribeEmail, setSubscribeEmail] = useState("");
+  const [subscribeLoading, setSubscribeLoading] = useState(false);
+  const [subscribeMessage, setSubscribeMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const email = subscribeEmail.trim();
+    if (!email) {
+      setSubscribeMessage({ type: "error", text: "Please enter your email address." });
+      return;
+    }
+    setSubscribeLoading(true);
+    setSubscribeMessage(null);
+    try {
+      const baseUrl = import.meta.env.VITE_BACKEND_URL || "";
+      const res = await fetch(`${baseUrl}/api/v1/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data?.success) {
+        setSubscribeMessage({ type: "success", text: data?.message || "Subscribed successfully!" });
+        setSubscribeEmail("");
+      } else {
+        setSubscribeMessage({ type: "error", text: data?.message || "Something went wrong. Please try again." });
+      }
+    } catch {
+      setSubscribeMessage({ type: "error", text: "Unable to subscribe. Please try again later." });
+    } finally {
+      setSubscribeLoading(false);
+    }
+  };
 
   const scrollCarousel = (direction: any) => {
     const carousel: any = document.getElementById("carousel");
@@ -64,33 +97,91 @@ const LandingPage = () => {
 
   const faqData = [
     {
-      question: "What is this platform about?",
+      question: 'What is Boom?',
       answer:
-        "This platform helps you connect, share content, and grow your network.",
+        'Boom is a comprehensive financial ecosystem where individual investors, startups, and small business owners connect directly with financial advisors, insurance brokers, and venture capitalists. Inspired by the legacy of community-driven wealth like Black Wall Street, we bridge the gap between your investments and your personal values.',
     },
     {
-      question: "What kind of posts can I share?",
+      question: 'How does the AI work on Boom?',
       answer:
-        "You can share articles, opinions, images, videos, and event invites.",
+        'Our AI does more than just track numbers; it tracks alignment. Using a dynamic profile that evolves with your financial objectives and socio-political values, the AI recommends content and connections tailored to you. Our proprietary research engine also provides community sentiment scores and suitability ratings for companies and investment strategies.',
     },
     {
-      question: "Can I upload documents to my posts?",
-      answer: "Yes, supported formats include PDF, DOCX, and PPT.",
+      question: 'Is it free to join?',
+      answer:
+        'Yes, joining the Boom community is completely free. We also offer premium features for power users, including advanced live-streaming capabilities and sponsored content opportunities for businesses looking to expand their reach.',
     },
     {
-      question: "Is it free to join?",
+      question: 'What kind of content can I share and engage with?',
       answer:
-        "Yes! Basic membership is completely free. We also offer premium features like live streaming and ad promotions.",
+        'Boom is built for high-level interaction. You can share posts, upload photos and videos, and attach important documents. Beyond standard posting, users can host or join live streaming events, participate in private or public chatrooms, and engage with live security tickers and news feeds.',
+    },
+    {
+      question: 'Does Boom comply with financial regulations?',
+      answer:
+        'Absolutely. Boom is built with professionals in mind. We monitor content for FINRA compliance and provide financial professionals with the ability to download all on-platform communications for their records and auditing needs.',
+    },
+    {
+      question: 'How does Boom help me invest based on my values?',
+      answer:
+        'Unlike traditional platforms, Boom integrates socio-political information into its research. We provide insights into company announcements and suitability ratings so you can ensure your capital is supporting businesses that align with your mission.',
+    },
+    {
+      question: 'I’m a startup/small business owner. How can Boom help me?',
+      answer:
+        'Boom provides a platform for visibility and growth. You can make business announcements, connect with potential investors (including VCs), and network with financial advisors who can help you scale—all within a community that values your success.',
+    },
+    {
+      question: 'What is the "Event Calendar" feature?',
+      answer:
+        'Stay ahead of the market with our integrated calendar. It tracks public and private events, as well as upcoming IPO listings, so you never miss an opportunity to connect or invest.',
+    },
+    {
+      question: 'Can I use Boom for private networking?',
+      answer:
+        'Yes. While we encourage community-wide insights, you can also engage in private messaging and exclusive chatrooms to build deeper professional relationships.',
+    },
+    {
+      question: 'What makes the Boom community different from other financial networks?',
+      answer:
+        'Boom is a high-trust ecosystem designed for the conscious investor. Unlike open social platforms, every user on Boom is ID-verified, and all financial professionals undergo a rigorous license verification during registration. We bridge the gap between individual wealth and professional expertise, all within a framework of shared socio-political values.',
+    },
+    {
+      question: 'How does the "Suitability Rating" work?',
+      answer:
+        'We take the guesswork out of alignment. Boom provides a proprietary numeric Suitability Score (1–100) for companies and investment strategies. This score calculates how well an opportunity matches your specific financial objectives and personal values, helping you make data-backed decisions with confidence.',
+    },
+    {
+      question: 'What is "Community Sentiment," and how is it calculated?',
+      answer:
+        'Our sentiment scores go far beyond simple upvotes or downvotes. Boom utilizes advanced AI algorithms to perform a complex analysis of community discussions. By evaluating keywords and conversation trends within our network, we provide a real-time pulse on how the ecosystem views specific securities and market shifts.',
+    },
+    {
+      question: 'Are there specific tools for Startups and Founders?',
+      answer:
+        'Absolutely. Boom is built to be a launchpad for innovation. Founders can designate dedicated "Founder’s Rooms" for deep-dive discussions and upload Pitch Decks directly to their posts or chatrooms. This creates a streamlined pipeline between visionaries and the Venture Capitalists or investors looking for the next big mission-driven company.',
+    },
+    {
+      question: 'How does Boom support Financial Professionals and Compliance?',
+      answer:
+        'We understand the regulatory landscape. Boom monitors all posts for FINRA compliance and provides professionals with the ability to archive and download all on-platform communications. This ensures you can build your network and engage with clients while staying fully audit-ready.',
+    },
+    {
+      question: 'Is there a cost to join the Boom ecosystem?',
+      answer:
+        'Joining the Boom community is free. We are committed to democratizing access to financial insights. For those looking to scale their presence, we offer premium features including enhanced live-streaming capabilities and sponsored post options to reach a wider audience.',
     },
   ];
 
   const coreFeatures = [
-    { icon: VerifiedImage, text: "Profile Setup & Verification" },
+    { icon: VerifiedImage, text: "Build a dynamic profile" },
     { icon: FairTrade, text: "Identifies Members with FAIR Values" },
-    { icon: SearchIcon, text: "Advanced User Search" },
-    { icon: Messages, text: "One-to-One Messaging" },
-    { icon: Card, text: "Ad Packages (Experts)" },
+    { icon: SearchIcon, text: "Upcoming IPO &amp; Event Calendar" },
+    { icon: Messages, text: "Trust Verification of ID and Financial License" },
+    { icon: Card, text: "Dedicated Founder’s Rooms &amp; Pitch Deck Integration" },
     { icon: StreamImg, text: "Live Video Streams (Premium)" },
+    { icon: News, text: "Security Ticker and Latest Financial/ Business News" },
+    { icon: Monitoring, text: "Financial Regulatory Compliance Monitoring" },
     { icon: Document, text: "Document Sharing (PDF, JPEG, etc.)" },
     { icon: Ai, text: "Mobile + Web Platform" },
     { icon: Calendar, text: "Personal Calendar Integration" },
@@ -98,7 +189,6 @@ const LandingPage = () => {
     { icon: Monitoring, text: "Compliance Monitoring" },
     { icon: Ecosystem, text: "Ecosystem" },
     { icon: UserVerification, text: "User Verification" },
-    { icon: News, text: "Latest Financial News" },
     { icon: Discussion, text: "Discussion Vaults" },
     { icon: Insights, text: "Filters Insights from Experts" },
     { icon: IpoCalendar, text: "Stock Ticker and IPO Calendar" },
@@ -125,19 +215,21 @@ const LandingPage = () => {
         </div>
 
         {/* Banner Content */}
-        <div className="flex justify-between items-center flex-col-reverse md:flex-row w-full max-w-[1400px] pb-10 md:pb-20 px-5 md:px-0">
-          <div className="mt-10 md:mt-0 md:ml-10 text-center md:text-left">
+        <div className="flex justify-between items-center flex-col-reverse md:flex-row w-full max-w-[1400px] pb-10 md:pb-20 px-5 md:px-0 md:justify-between">
+          <div className="mt-10 md:mt-0 md:ml-10 w-full flex flex-col items-center md:items-start text-center md:text-left">
             <p className="text-white font-bold text-[28px] md:text-[45px] sm:text-[35px] leading-tight mb-5">
-              Connect. Share. Grow — <br />
-              Your Financial Social Network
+              The Future of Finance is Loading.
             </p>
-            <p className="text-white font-normal text-[20px] sm:text-[16px] w-full md:w-3/4 mb-5">
+            <p className="text-white font-normal text-[24px] sm:text-[20px] italic w-full md:w-3/4 mb-5 mx-auto md:mx-0">
+              Our full AI-driven ecosystem touches down Early Summer 2026. Join the movement today.
+            </p>
+            <p className="text-white font-normal text-[20px] sm:text-[16px] w-full md:w-3/4 mb-5 mx-auto md:mx-0">
               Access a growing ecosystem of individual investors, advisors, and
               business founders exchanging financial insights, streaming live
               events, building networks, and staying up to date on latest
               financial news – all in one place.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center md:justify-start">
               {/* <a
                 href="https://play.google.com/store"
                 target="_blank"
@@ -161,6 +253,38 @@ const LandingPage = () => {
                 />
               {/* </a> */}
             </div>
+            {/* Subscribe form - below Play Store & App Store buttons */}
+            <div className="w-full max-w-xl rounded-lg bg-[#047638] p-5 mt-2 mx-auto md:mx-0">
+              <h3 className="text-white text-center md:text-left text-lg font-semibold mb-2">
+                Don't Just Watch History. Build It.
+              </h3>
+              <p className="text-white text-sm md:text-base mb-4 text-center md:text-left">
+                Secure your spot in the ecosystem. Be the first to access verified connections, AI-driven mission alignment,
+                and the new digital Black Wall Street.
+              </p>
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 items-center justify-center md:justify-start">
+                <input
+                  type="email"
+                  placeholder="youraddress@email.com"
+                  value={subscribeEmail}
+                  onChange={(e) => setSubscribeEmail(e.target.value)}
+                  disabled={subscribeLoading}
+                  className="flex-1 w-full px-4 py-2.5 rounded-lg bg-white/10 text-white placeholder-white/70 focus:outline-none focus:border-white text-sm"
+                />
+                <button
+                  type="submit"
+                  disabled={subscribeLoading}
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-lg border-2 border-white/80 bg-white/10 text-white font-semibold uppercase text-sm tracking-wide hover:bg-white/20 focus:outline-none focus:border-white disabled:opacity-60 transition-colors"
+                >
+                  {subscribeLoading ? "Subscribing..." : "Subscribe"}
+                </button>
+              </form>
+              {subscribeMessage && (
+                <p className="mt-3 text-center text-sm text-white">
+                  {subscribeMessage.text}
+                </p>
+              )}
+            </div>
           </div>
           <div className="md:mr-10">
             <img
@@ -177,7 +301,7 @@ const LandingPage = () => {
         <p className="text-[#7030A0] text-center w-full text-3xl sm:text-2xl mb-10">
           How It Works
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">  
           {[
             {
               icon: personImg,
@@ -224,7 +348,7 @@ const LandingPage = () => {
           Core Features
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-x-[60px] sm:gap-y-[40px] gap-y-4 justify-items-center w-full max-w-6xl">
-          {(showAllFeatures ? coreFeatures : coreFeatures.slice(0, 6)).map((feature, index) => (
+          {(showAllFeatures ? coreFeatures : coreFeatures.slice(0, 8)).map((feature, index) => (
             <div
               key={index}
               className="w-full bg-white hover:bg-[#F8F8F8] transition rounded-xl p-3 sm:p-5 flex flex-col items-center"
@@ -550,9 +674,15 @@ const LandingPage = () => {
             <span className="text-xl font-bold text-[#7030A0]">Boom</span>
           </div>
           <div className="flex gap-8 sm:gap-4 cursor-pointer flex-wrap justify-center">
-            <p>About</p>
-            <a href="/privacy-policy" className="hover:text-[#7030A0]">Privacy Policy</a>
-            <p>Terms</p>
+            <a href="/about" className="hover:text-[#7030A0]">
+              About
+            </a>
+            <a href="/privacy-policy" className="hover:text-[#7030A0]">
+              Privacy Policy
+            </a>
+            <a href="/terms" className="hover:text-[#7030A0]">
+              Terms of Use
+            </a>
             <p>Contact</p>
           </div>
           <div className="flex gap-3">
