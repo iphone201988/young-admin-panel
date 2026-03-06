@@ -13,6 +13,7 @@ import {
   Settings,
   Menu,
   User,
+  Mail,
 } from "lucide-react";
 import { Link, useLocation } from "react-router";
 
@@ -28,6 +29,7 @@ const navigationItems = [
     badge: "",
   },
   { icon: ImageIcon, label: "Upload Media", href: "/admin/upload-media" },
+  { icon: Mail, label: "Contact Us", href: "/admin/contact-us" },
   // { icon: MessageSquare, label: "Messaging", href: "/messaging" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];

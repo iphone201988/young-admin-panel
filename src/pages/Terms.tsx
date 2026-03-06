@@ -21,7 +21,7 @@ const Terms = () => {
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-purple-100 px-6 md:px-10 py-8 md:py-10">
             <header className="mb-8">
               <h1 className="text-3xl font-bold text-[#7030A0]">
-                Terms of Use &amp; Privacy Notice
+                Terms
               </h1>
               <p className="text-sm text-gray-500 mt-1">
                 Please read these terms carefully before using the Boom informational site or

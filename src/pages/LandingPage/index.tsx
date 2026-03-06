@@ -176,14 +176,14 @@ const LandingPage = () => {
   const coreFeatures = [
     { icon: VerifiedImage, text: "Build a dynamic profile" },
     { icon: FairTrade, text: "Identifies Members with FAIR Values" },
-    { icon: SearchIcon, text: "Upcoming IPO &amp; Event Calendar" },
-    { icon: Messages, text: "Trust Verification of ID and Financial License" },
-    { icon: Card, text: "Dedicated Founder’s Rooms &amp; Pitch Deck Integration" },
-    { icon: StreamImg, text: "Live Video Streams (Premium)" },
+    { icon: Calendar, text: "Upcoming IPO & Event Calendar" },
+    { icon: UserVerification, text: "Trust Verification of ID and Financial License" },
+    { icon: Card, text: "Dedicated Founder’s Rooms & Pitch Deck Integration" },
+    { icon: Ai, text: "AI Research Engine with Match & Sentiment Scores" },
     { icon: News, text: "Security Ticker and Latest Financial/ Business News" },
     { icon: Monitoring, text: "Financial Regulatory Compliance Monitoring" },
     { icon: Document, text: "Document Sharing (PDF, JPEG, etc.)" },
-    { icon: Ai, text: "Mobile + Web Platform" },
+    { icon: AiRel, text: "Mobile + Web Platform" },
     { icon: Calendar, text: "Personal Calendar Integration" },
     { icon: AiRel, text: "AI-Powered Content Curation" },
     { icon: Monitoring, text: "Compliance Monitoring" },
@@ -201,29 +201,31 @@ const LandingPage = () => {
         className="relative bg-center bg-no-repeat bg-cover flex flex-col items-center"
         style={{ backgroundImage: `url(${BannerImg})` }}
       >
-        {/* Navbar */}
-        <div className="flex justify-between items-center w-full max-w-[1400px] mx-5 mt-5 mb-[3rem]">
-          <img src={Logo} alt="" className="w-full max-w-[40px] ml-5" />
-          {/* <div className="flex gap-2 mr-5">
-            <button className="bg-transparent text-white border border-white px-3 py-2 rounded-lg text-sm hover:bg-white hover:text-[#7030A0] transition">
-              Login
-            </button>
-            <button className="bg-[#00B050] text-white px-3 py-2 rounded-lg text-sm hover:bg-green-700 transition">
-              Sign Up
-            </button>
-          </div> */}
+        {/* Navbar / Header: Logo (left) + Square block with copy (right) */}
+        <div className="flex flex-col md:flex-row justify-between items-stretch md:items-start gap-6 w-full max-w-[1400px] mx-5 mt-5 mb-6 md:mb-8">
+          <div className="flex-shrink-0">
+            <img src={Logo} alt="" className="w-full max-w-[40px] ml-5" />
+          </div>
+          <div className="flex-1 max-w-2xl ml-5 md:ml-0 md:mr-5 rounded-lg border-2 border-white/30 bg-black/20 backdrop-blur-sm p-4 md:p-5 text-white">
+          <p className="text-white font-bold text-[20px] md:text-[30px] sm:text-[25px] leading-tight mb-5">
+              The Future of Finance is Loading.
+            </p>
+            <p className="text-white font-normal text-base md:text-lg italic mb-2">
+              Our full AI-driven ecosystem touches down Early Summer 2026. Join the movement today.
+            </p>
+          </div>
         </div>
 
         {/* Banner Content */}
         <div className="flex justify-between items-center flex-col-reverse md:flex-row w-full max-w-[1400px] pb-10 md:pb-20 px-5 md:px-0 md:justify-between">
           <div className="mt-10 md:mt-0 md:ml-10 w-full flex flex-col items-center md:items-start text-center md:text-left">
             <p className="text-white font-bold text-[28px] md:text-[45px] sm:text-[35px] leading-tight mb-5">
-              The Future of Finance is Loading.
+              Your Portfolio. Your Values. Your Ecosystem.
             </p>
-            <p className="text-white font-normal text-[24px] sm:text-[20px] italic w-full md:w-3/4 mb-5 mx-auto md:mx-0">
-              Our full AI-driven ecosystem touches down Early Summer 2026. Join the movement today.
+            <p className="text-white font-normal text-base md:text-lg italic mb-2">
+              Where AI-driven connections and real-world sentiment bridge the gap between your investments and your mission
             </p>
-            <p className="text-white font-normal text-[20px] sm:text-[16px] w-full md:w-3/4 mb-5 mx-auto md:mx-0">
+            <p className="text-white font-normal text-sm md:text-base leading-relaxed">
               Access a growing ecosystem of individual investors, advisors, and
               business founders exchanging financial insights, streaming live
               events, building networks, and staying up to date on latest
@@ -305,8 +307,8 @@ const LandingPage = () => {
           {[
             {
               icon: personImg,
-              title: "Create Your Profile",
-              desc: "Answer a few quick questions.",
+              title: "Build a dynamic profile",
+              desc: "Identify your financial objectives and values.",
             },
             {
               icon: groupImg,
@@ -649,18 +651,37 @@ const LandingPage = () => {
         </div>
       </div>
 
-      {/* CTA Section */}
-      <div className="px-10 sm:px-5 py-10 flex flex-col items-center bg-[#AB8BC3] text-white">
-        <p className="text-white text-center w-full text-3xl sm:text-2xl mb-5">
-          Ready to gain access to financial resources?
-        </p>
-        <p className="text-white text-center w-full text-xl sm:text-base">
-          Join the first financial social network today.
-        </p>
-        <button className="bg-[#00B050] text-white px-6 py-3 rounded-lg text-[16px] sm:text-[14px] mt-5 hover:bg-green-700 transition">
-          Get Started Free
-        </button>
-      </div>
+      <div className="w-full bg-[#047638] p-5 mt-2 mx-auto md:mx-0 flex flex-col items-center justify-center">
+              <h3 className="text-white text-center md:text-left text-lg font-semibold mb-2">
+                Don't Just Watch History. Build It.
+              </h3>
+              <p className="text-white text-sm md:text-base mb-4 text-center md:text-left">
+                Secure your spot in the ecosystem. Be the first to access verified connections, AI-driven mission alignment,
+                and the new digital Black Wall Street.
+              </p>
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 items-center justify-center w-full md:w-[30%] md:justify-start">
+                <input
+                  type="email"
+                  placeholder="youraddress@email.com"
+                  value={subscribeEmail}
+                  onChange={(e) => setSubscribeEmail(e.target.value)}
+                  disabled={subscribeLoading}
+                  className="flex-1 w-full px-4 py-2.5 rounded-lg bg-white/10 text-white placeholder-white/70 focus:outline-none focus:border-white text-sm"
+                />
+                <button
+                  type="submit"
+                  disabled={subscribeLoading}
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-lg border-2 border-white/80 bg-white/10 text-white font-semibold uppercase text-sm tracking-wide hover:bg-white/20 focus:outline-none focus:border-white disabled:opacity-60 transition-colors"
+                >
+                  {subscribeLoading ? "Subscribing..." : "Subscribe"}
+                </button>
+              </form>
+              {subscribeMessage && (
+                <p className="mt-3 text-center text-sm text-white">
+                  {subscribeMessage.text}
+                </p>
+              )}
+            </div>
 
       {/* Footer */}
       <footer className="bg-white">

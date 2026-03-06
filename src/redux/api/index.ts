@@ -15,10 +15,11 @@ const USERS_TAG = "USERS";
 const COMPLAINTS = "COMPLAINTS";
 const POSTS = "POSTS";
 const ADS = "ADS";
+const CONTACT = "CONTACT";
 export const youngApi: any = createApi({
   reducerPath: "youngApi",
   baseQuery,
-  tagTypes: [USERS_TAG, COMPLAINTS, POSTS, ADS],
+  tagTypes: [USERS_TAG, COMPLAINTS, POSTS, ADS, CONTACT],
   endpoints: (builder) => ({
     adminLogin: builder.mutation({
       query: (body) => ({
@@ -123,6 +124,21 @@ export const youngApi: any = createApi({
         body: formData,
       }),
     }),
+    getContactSubmissions: builder.query<any, { page?: number }>({
+      query: ({ page = 1 }) => ({
+        url: `getContactSubmissions?page=${page}`,
+        method: "GET",
+      }),
+      providesTags: [CONTACT],
+    }),
+    replyToContact: builder.mutation<any, { id: string; message: string }>({
+      query: ({ id, message }) => ({
+        url: `replyToContact/${id}`,
+        method: "POST",
+        body: { message },
+      }),
+      invalidatesTags: [CONTACT],
+    }),
   }),
 });
 
@@ -140,4 +156,6 @@ export const {
   useUpdateAdStatusMutation,
   useChangePasswordMutation,
   useUploadMediaMutation,
+  useGetContactSubmissionsQuery,
+  useReplyToContactMutation,
 } = youngApi;

@@ -25,6 +25,10 @@ const pageConfig = {
     title: "Upload Media",
     subtitle: "Upload images with optional source link",
   },
+  "/admin/contact-us": {
+    title: "Contact Us",
+    subtitle: "View and reply to contact form submissions",
+  },
   "/admin/messaging": {
     title: "Messaging",
     subtitle: "Send messages to users individually or in bulk",
