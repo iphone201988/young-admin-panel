@@ -18,6 +18,7 @@ import ContactUs from "./pages/ContactUs";
 import DeleteAccount from "./pages/DeleteAccount";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
+import Contact from "./pages/Contact";
 import About from "./pages/About";
 import FinancialSocialNetwork from "./pages/Home2";
 import LandingPage from "./pages/LandingPage";
@@ -32,6 +33,7 @@ function Router() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/admin/login" element={<LoginPage />} />
         <Route path="/admin" element={<Layout />}>
           <Route index element={<Dashboard />} />

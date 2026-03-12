@@ -38,6 +38,10 @@ import Frame5 from "../assets/Frame-5.png";
 import Frame6 from "../assets/Frame-6.png";
 import Frame7 from "../assets/Frame-7.png";
 import Frame8 from "../assets/Frame-8.png";
+import Frame9 from "../assets/Frame-9.png";
+import Frame10 from "../assets/Frame-10.png";
+import Frame11 from "../assets/Frame-11.png";
+
 
 import playStoreImg from "../assets/play.png";
 import appStoreImg from "../assets/apple.png";
@@ -285,7 +289,7 @@ const FinancialSocialNetwork = () => {
 
           <div
             id="carousel"
-            className="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth py-2 hide-scroll-bar"
+            className="flex gap-5 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth py-2 hide-scroll-bar w-full min-w-0 pr-10"
           >
             <img
               src={Frame1}
@@ -324,6 +328,21 @@ const FinancialSocialNetwork = () => {
             />
             <img
               src={Frame8}
+              alt=""
+              className="snap-start w-[300px] sm:w-[245px] rounded-3xl hover:-translate-y-1 transition"
+            />
+             <img
+              src={Frame9}
+              alt=""
+              className="snap-start w-[300px] sm:w-[245px] rounded-3xl hover:-translate-y-1 transition"
+            />
+             <img
+              src={Frame10}
+              alt=""
+              className="snap-start w-[300px] sm:w-[245px] rounded-3xl hover:-translate-y-1 transition"
+            />
+             <img
+              src={Frame11}
               alt=""
               className="snap-start w-[300px] sm:w-[245px] rounded-3xl hover:-translate-y-1 transition"
             />

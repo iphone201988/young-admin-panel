@@ -28,7 +28,7 @@ import upworkimg from "../../assets/upwork-img.png";
 
 import socialIcon1 from "../../assets/1384015 1.png";
 import socialIcon2 from "../../assets/2168281 1.png";
-import socialIcon3 from "../../assets/5969020 1.png";
+import socialIcon3 from "../../assets/tiktok.png";
 
 import Frame1 from "../../assets/Frame-1.png";
 import Frame2 from "../../assets/Frame-2.png";
@@ -38,6 +38,9 @@ import Frame5 from "../../assets/Frame-5.png";
 import Frame6 from "../../assets/Frame-6.png";
 import Frame7 from "../../assets/Frame-7.png";
 import Frame8 from "../../assets/Frame-8.png";
+import Frame9 from "../../assets/Frame-9.png";
+import Frame10 from "../../assets/Frame-10.png";
+import Frame11 from "../../assets/Frame-11.png";
 
 import playStoreImg from "../../assets/playstore.png";
 import appStoreImg from "../../assets/apple.png";
@@ -207,7 +210,7 @@ const LandingPage = () => {
             <img src={Logo} alt="" className="w-full max-w-[40px] ml-5" />
           </div>
           <div className="flex-1 max-w-2xl ml-5 md:ml-0 md:mr-5 rounded-lg border-2 border-white/30 bg-black/20 backdrop-blur-sm p-4 md:p-5 text-white">
-          <p className="text-white font-bold text-[20px] md:text-[30px] sm:text-[25px] leading-tight mb-5">
+            <p className="text-white font-bold text-[20px] md:text-[30px] sm:text-[25px] leading-tight mb-5">
               The Future of Finance is Loading.
             </p>
             <p className="text-white font-normal text-base md:text-lg italic mb-2">
@@ -223,13 +226,13 @@ const LandingPage = () => {
               Your Portfolio. Your Values. Your Ecosystem.
             </p>
             <p className="text-white font-normal text-base md:text-lg italic mb-2">
-              Where AI-driven connections and real-world sentiment bridge the gap between your investments and your mission
+              Building the digital infrastructure for a circular economy. We provide a high-trust foundation
+              where community capital and collective values move in sync to power sustainable growth.
             </p>
             <p className="text-white font-normal text-sm md:text-base leading-relaxed">
-              Access a growing ecosystem of individual investors, advisors, and
-              business founders exchanging financial insights, streaming live
-              events, building networks, and staying up to date on latest
-              financial news – all in one place.
+              Engineered with proprietary AI to align your portfolio with your mission. From everyday
+              investors to established small businesses and seasoned VCs, we provide the data and the
+              network to turn shared intent into measurable impact.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center md:justify-start">
               {/* <a
@@ -237,22 +240,22 @@ const LandingPage = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               > */}
-                <img
-                  src={playStoreImg}
-                  alt="Get it on Google Play"
-                  className="h-14 hover:scale-105 transition-transform cursor-pointer"
-                />
+              <img
+                src={playStoreImg}
+                alt="Get it on Google Play"
+                className="h-14 hover:scale-105 transition-transform cursor-pointer"
+              />
               {/* </a> */}
               {/* <a
                 href="https://www.apple.com/app-store/"
                 target="_blank"
                 rel="noopener noreferrer"
               > */}
-                <img
-                  src={appStoreComingSoonImg}
-                  alt="Download on the App Store"
-                  className="h-14 hover:scale-105 transition-transform cursor-pointer rounded-lg"
-                />
+              <img
+                src={appStoreComingSoonImg}
+                alt="Download on the App Store"
+                className="h-14 hover:scale-105 transition-transform cursor-pointer rounded-lg"
+              />
               {/* </a> */}
             </div>
             {/* Subscribe form - below Play Store & App Store buttons */}
@@ -303,7 +306,7 @@ const LandingPage = () => {
         <p className="text-[#7030A0] text-center w-full text-3xl sm:text-2xl mb-10">
           How It Works
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">  
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {[
             {
               icon: personImg,
@@ -387,7 +390,7 @@ const LandingPage = () => {
       {/* Product Tour Section */}
       <div className="px-10 sm:px-5 py-10 flex flex-col items-center">
         <p className="text-[#7030A0] text-center w-full text-3xl sm:text-2xl mb-10">
-          Product Tour
+          The Blueprint
         </p>
         <div className="relative w-full overflow-hidden px-5">
           <button
@@ -471,6 +474,21 @@ const LandingPage = () => {
               alt=""
               className="snap-start w-[300px] sm:w-[245px] rounded-3xl hover:-translate-y-1 transition"
             />
+            <img
+              src={Frame9}
+              alt=""
+              className="snap-start w-[300px] sm:w-[245px] rounded-3xl hover:-translate-y-1 transition"
+            />
+            <img
+              src={Frame10}
+              alt=""
+              className="snap-start w-[300px] sm:w-[245px] rounded-3xl hover:-translate-y-1 transition"
+            />
+            <img
+              src={Frame11}
+              alt=""
+              className="snap-start w-[300px] sm:w-[245px] rounded-3xl hover:-translate-y-1 transition"
+            />
           </div>
         </div>
       </div>
@@ -483,17 +501,15 @@ const LandingPage = () => {
           </p>
           <div className="flex gap-10 mb-8">
             <span
-              className={`tab cursor-pointer text-[#7030A0] font-semibold pb-1 border-b-2 border-transparent ${
-                activeTab === "general" ? "active" : ""
-              }`}
+              className={`tab cursor-pointer text-[#7030A0] font-semibold pb-1 border-b-2 border-transparent ${activeTab === "general" ? "active" : ""
+                }`}
               onClick={() => setActiveTab("general")}
             >
               General Members
             </span>
             <span
-              className={`tab cursor-pointer text-[#7030A0] font-semibold pb-1 border-b-2 border-transparent ${
-                activeTab === "expert" ? "active" : ""
-              }`}
+              className={`tab cursor-pointer text-[#7030A0] font-semibold pb-1 border-b-2 border-transparent ${activeTab === "expert" ? "active" : ""
+                }`}
               onClick={() => setActiveTab("expert")}
             >
               Expert Members
@@ -502,9 +518,8 @@ const LandingPage = () => {
 
           {/* Plans Grid */}
           <div
-            className={`plans-grid grid grid-cols-1 sm:grid-cols-3 gap-5 w-full ${
-              activeTab === "general" ? "block" : "hidden"
-            }`}
+            className={`plans-grid grid grid-cols-1 sm:grid-cols-3 gap-5 w-full ${activeTab === "general" ? "block" : "hidden"
+              }`}
           >
             <div className="box bg-[#AB8BC3] text-white rounded-lg p-8 text-2xl font-bold">
               Choose <br /> your plans
@@ -522,9 +537,8 @@ const LandingPage = () => {
           </div>
 
           <div
-            className={`plans-grid grid grid-cols-1 sm:grid-cols-3 gap-5 w-full ${
-              activeTab === "expert" ? "block" : "hidden"
-            }`}
+            className={`plans-grid grid grid-cols-1 sm:grid-cols-3 gap-5 w-full ${activeTab === "expert" ? "block" : "hidden"
+              }`}
           >
             <div className="box bg-[#AB8BC3] text-white rounded-lg p-8 text-2xl font-bold">
               Choose <br /> your plans
@@ -547,9 +561,8 @@ const LandingPage = () => {
 
           {/* General Features */}
           <div
-            className={`features w-full ${
-              activeTab === "general" ? "block" : "hidden"
-            }`}
+            className={`features w-full ${activeTab === "general" ? "block" : "hidden"
+              }`}
           >
             <div className="features-sub-section grid grid-cols-1 sm:grid-cols-3 gap-5 w-full">
               <div className="feature-title bg-[#AB8BC3] text-white rounded-lg p-5 flex flex-col gap-3 text-[18px]">
@@ -578,9 +591,8 @@ const LandingPage = () => {
 
           {/* Expert Features */}
           <div
-            className={`features w-full ${
-              activeTab === "expert" ? "block" : "hidden"
-            }`}
+            className={`features w-full ${activeTab === "expert" ? "block" : "hidden"
+              }`}
           >
             <div className="features-sub-section grid grid-cols-1 sm:grid-cols-3 gap-5 w-full">
               <div className="feature-title bg-[#AB8BC3] text-white rounded-lg p-5 flex flex-col gap-3 text-[18px]">
@@ -617,9 +629,8 @@ const LandingPage = () => {
             {faqData.map((faq, index) => (
               <div
                 key={index}
-                className={`faq-item bg-[#F8F8F8] rounded-lg overflow-hidden transition ${
-                  openFaq === index ? "open" : ""
-                }`}
+                className={`faq-item bg-[#F8F8F8] rounded-lg overflow-hidden transition ${openFaq === index ? "open" : ""
+                  }`}
               >
                 <button
                   className="faq-question w-full flex justify-between items-center px-4 py-3 text-lg sm:text-base text-[#414141]"
@@ -651,7 +662,7 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div className="w-full bg-[#047638] p-5 mt-2 mx-auto md:mx-0 flex flex-col items-center justify-center">
+      {/* <div className="w-full bg-[#047638] p-5 mt-2 mx-auto md:mx-0 flex flex-col items-center justify-center">
               <h3 className="text-white text-center md:text-left text-lg font-semibold mb-2">
                 Don't Just Watch History. Build It.
               </h3>
@@ -681,7 +692,40 @@ const LandingPage = () => {
                   {subscribeMessage.text}
                 </p>
               )}
-            </div>
+            </div> */}
+
+
+      {/* CTA Section */}
+      <div className="px-10 sm:px-5 py-12 flex flex-col items-center bg-[#AB8BC3] text-white">
+        <p className="text-white text-center w-full text-xl sm:text-lg max-w-3xl mb-8">
+          &quot;Access a growing ecosystem of individual investors, advisors, brokers,
+          business owners, and VCs exchanging financial insights, streaming live events, building
+          networks, and staying up to date on the latest financial and business news – all in one
+          place.&quot;
+        </p>
+        <form onSubmit={handleSubscribe} className="w-full max-w-md flex flex-col sm:flex-row gap-3 items-center justify-center">
+          <input
+            type="email"
+            placeholder="youraddress@email.com"
+            value={subscribeEmail}
+            onChange={(e) => setSubscribeEmail(e.target.value)}
+            disabled={subscribeLoading}
+            className="flex-1 w-full px-4 py-2.5 rounded-lg border-2 border-white/80 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:border-white text-sm"
+          />
+          <button
+            type="submit"
+            disabled={subscribeLoading}
+            className="w-full sm:w-auto px-6 py-2.5 rounded-lg border-2 border-white/80 bg-white/10 text-white font-semibold uppercase text-sm tracking-wide hover:bg-white/20 focus:outline-none focus:border-white disabled:opacity-60 transition-colors"
+          >
+            {subscribeLoading ? "Subscribing..." : "Subscribe"}
+          </button>
+        </form>
+        {subscribeMessage && (
+          <p className="mt-3 text-center text-sm text-white">
+            {subscribeMessage.text}
+          </p>
+        )}
+      </div>
 
       {/* Footer */}
       <footer className="bg-white">
@@ -704,12 +748,14 @@ const LandingPage = () => {
             <a href="/terms" className="hover:text-[#7030A0]">
               Terms of Use
             </a>
-            <p>Contact</p>
+            <a href="/contact" className="hover:text-[#7030A0]">
+              Contact
+            </a>
           </div>
           <div className="flex gap-3">
-            <img src={socialIcon1} alt="Social Icon" className="w-7 h-7" />
-            <img src={socialIcon2} alt="Social Icon" className="w-7 h-7" />
-            <img src={socialIcon3} alt="Social Icon" className="w-7 h-7" />
+            <a href="https://www.Instagram.com/theboomapp" target="_blank"><img src={socialIcon1} alt="Social Icon" className="w-7 h-7" /></a>
+            <a href="https://www.facebook.com/TheBoomApp" target="_blank"><img src={socialIcon2} alt="Social Icon" className="w-7 h-7" /></a>
+            <a href="https://www.tiktok.com/@theboom.app" target="_blank"><img src={socialIcon3} alt="Social Icon" className="w-7 h-7" /></a>
           </div>
         </div>
         <div className="bg-[#7030A0] py-2">
