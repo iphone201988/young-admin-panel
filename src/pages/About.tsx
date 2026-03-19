@@ -10,7 +10,6 @@ const About = () => {
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center">
           <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
             <img src={Logo} alt="Boom logo" className="w-10 h-10 object-contain" />
-            <span className="text-2xl font-bold">Boom</span>
           </Link>
         </div>
       </header>

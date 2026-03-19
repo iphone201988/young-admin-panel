@@ -80,7 +80,6 @@ const Contact = () => {
             className="flex items-center gap-3 hover:opacity-90 transition-opacity"
           >
             <img src={Logo} alt="Boom logo" className="w-10 h-10 object-contain" />
-            <span className="text-2xl font-bold">Boom</span>
           </Link>
         </div>
       </header>
@@ -93,7 +92,7 @@ const Contact = () => {
               <h1 className="text-3xl font-bold text-[#7030A0]">Contact Us</h1>
               <p className="mt-2 text-gray-600 text-sm md:text-base">
                 Have a question, partnership idea, or feedback about the Boom ecosystem? Send us
-                a note below. You do not need an account to reach out.
+                a note below.
               </p>
             </div>
 

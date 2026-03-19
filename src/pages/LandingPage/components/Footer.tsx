@@ -24,11 +24,9 @@ const Footer = () => {
               <div className="bg-gradient-to-r from-[#7030A0] to-purple-600 p-2 rounded-lg mr-3">
                   <img src={logo} alt="Logo" className="h-6 w-6 object-contain" />
               </div>
-              <h1 className="text-2xl font-bold">Boom</h1>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
-              The premier financial social networking platform connecting professionals, 
-              sharing insights, and building the future of finance together.
+              Your Portfolio. Your Values. Your Ecosystem.
             </p>
             {/* <div className="flex space-x-4">
               <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-[#7030A0] transition-colors">
