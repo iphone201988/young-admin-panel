@@ -49,6 +49,12 @@ export const youngApi: any = createApi({
       }),
       providesTags: [USERS_TAG],
     }),
+    getAdminUserChat: builder.query<any, string>({
+      query: (id) => ({
+        url: `getAdminUserChat/${id}`,
+        method: "GET",
+      }),
+    }),
     updateUserStatus: builder.mutation<any, any>({
       query: ({
         id,
@@ -69,6 +75,27 @@ export const youngApi: any = createApi({
           body: {},
         };
       },
+      invalidatesTags: [USERS_TAG],
+    }),
+    updateUserBasicDetails: builder.mutation<
+      any,
+      {
+        id: string;
+        body: {
+          firstName: string;
+          lastName: string;
+          username: string;
+          email: string;
+          countryCode: string;
+          phone: string;
+        };
+      }
+    >({
+      query: ({ id, body }) => ({
+        url: `updateUserBasicDetails/${id}`,
+        method: "PUT",
+        body,
+      }),
       invalidatesTags: [USERS_TAG],
     }),
     updateReportStatus: builder.mutation<any, any>({
@@ -147,11 +174,13 @@ export const {
   useGetDashboardStatsQuery,
   useGetAllUsersQuery,
   useGetUserByIdQuery,
+  useGetAdminUserChatQuery,
   useGetComplaintsQuery,
   useGetPostsQuery,
   useLazyGetPostsQuery,
   useGetAllAdsQuery,
   useUpdateUserStatusMutation,
+  useUpdateUserBasicDetailsMutation,
   useUpdateReportStatusMutation,
   useUpdateAdStatusMutation,
   useChangePasswordMutation,
