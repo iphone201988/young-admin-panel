@@ -11,14 +11,16 @@ import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
 const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchUserId, setSearchUserId] = useState("");
-  const debouncedSearch = useDebouncedValue(searchUserId.trim(), 400);
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearch = useDebouncedValue(searchTerm.trim(), 400);
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
+  const isObjectId = /^[a-f\d]{24}$/i.test(debouncedSearch);
 
   const { data, isLoading } = useGetAllUsersQuery({
     page: currentPage,
-    userId: debouncedSearch || undefined,
+    userId: isObjectId ? debouncedSearch : undefined,
+    name: !isObjectId && debouncedSearch ? debouncedSearch : undefined,
   });
   
   useEffect(() => {
@@ -54,10 +56,10 @@ const Users = () => {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="Search by User ID"
-                value={searchUserId}
+                placeholder="Search by name or user ID"
+                value={searchTerm}
                 onChange={(e) => {
-                  setSearchUserId(e.target.value);
+                  setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
                 className="w-full pl-9 pr-4 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"

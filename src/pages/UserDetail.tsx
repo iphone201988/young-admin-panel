@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router";
 import { Button } from "@/components/ui/button";
 import { UserDetailsPanel } from "@/components/users/UserDetailsPanel";
+import { UserActivityLogsTable } from "@/components/users/UserActivityLogsTable";
 import { UserSupportChat } from "@/components/users/UserSupportChat";
 import { useGetUserByIdQuery, useUpdateUserStatusMutation } from "@/redux/api";
 import { toast } from "react-toastify";
@@ -77,21 +78,24 @@ export default function UserDetail() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto flex flex-col min-h-0 lg:h-full">
-      <div className="shrink-0 mb-4">
+    <div className="w-full flex flex-col min-h-0 lg:h-full">
+      <div className="shrink-0 mb-3">
         <Button asChild variant="ghost" size="sm">
           <Link to="/admin/users">← Back to Users</Link>
         </Button>
       </div>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_minmax(300px,380px)] xl:grid-cols-[1fr_minmax(320px,420px)] flex-1 min-h-0 lg:items-stretch lg:overflow-hidden">
-        <UserDetailsPanel
-          user={user}
-          onRefetch={refetch}
-          isUpdatingStatus={isUpdating}
-          onToggleDeactivate={handleStatusChange}
-          onToggleDelete={handleDeleteRestore}
-          className="min-h-[24rem] lg:min-h-0 lg:h-full lg:max-h-full overflow-hidden"
-        />
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(340px,420px)] xl:grid-cols-[minmax(0,1fr)_minmax(360px,460px)] flex-1 min-h-0 lg:items-stretch lg:overflow-hidden">
+        <div className="min-h-0 overflow-y-auto space-y-4 pr-1">
+          <UserDetailsPanel
+            user={user}
+            onRefetch={refetch}
+            isUpdatingStatus={isUpdating}
+            onToggleDeactivate={handleStatusChange}
+            onToggleDelete={handleDeleteRestore}
+            className="min-h-[24rem]"
+          />
+          <UserActivityLogsTable userId={user._id} />
+        </div>
         <UserSupportChat
           userId={id}
           className="min-h-[22rem] lg:h-full lg:max-h-full lg:min-h-0 overflow-hidden"

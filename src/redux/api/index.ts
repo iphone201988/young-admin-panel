@@ -16,10 +16,12 @@ const COMPLAINTS = "COMPLAINTS";
 const POSTS = "POSTS";
 const ADS = "ADS";
 const CONTACT = "CONTACT";
+const FAQS = "FAQS";
+const SITE_CONTENT = "SITE_CONTENT";
 export const youngApi: any = createApi({
   reducerPath: "youngApi",
   baseQuery,
-  tagTypes: [USERS_TAG, COMPLAINTS, POSTS, ADS, CONTACT],
+  tagTypes: [USERS_TAG, COMPLAINTS, POSTS, ADS, CONTACT, FAQS, SITE_CONTENT],
   endpoints: (builder) => ({
     adminLogin: builder.mutation({
       query: (body) => ({
@@ -35,9 +37,10 @@ export const youngApi: any = createApi({
       }),
     }),
     getAllUsers: builder.query<any, any>({
-      query: ({ page = 1, userId }) => {
+      query: ({ page = 1, userId, name }) => {
         const params = new URLSearchParams({ page: String(page) });
         if (userId?.trim()) params.append("userId", userId.trim());
+        if (name?.trim()) params.append("name", name.trim());
         return { url: `getAllUsers?${params.toString()}`, method: "GET" };
       },
       providesTags: [USERS_TAG],
@@ -52,6 +55,12 @@ export const youngApi: any = createApi({
     getAdminUserChat: builder.query<any, string>({
       query: (id) => ({
         url: `getAdminUserChat/${id}`,
+        method: "GET",
+      }),
+    }),
+    getUserActivities: builder.query<any, { userId: string; page?: number; limit?: number }>({
+      query: ({ userId, page = 1, limit = 10 }) => ({
+        url: `activities/${userId}?page=${page}&limit=${limit}`,
         method: "GET",
       }),
     }),
@@ -98,6 +107,28 @@ export const youngApi: any = createApi({
       }),
       invalidatesTags: [USERS_TAG],
     }),
+    updateUserDocumentVerification: builder.mutation<
+      any,
+      { id: string; verified: boolean }
+    >({
+      query: ({ id, verified }) => ({
+        url: `updateUserDocumentVerification/${id}`,
+        method: "PUT",
+        body: { verified },
+      }),
+      invalidatesTags: [USERS_TAG],
+    }),
+    updateUserCrdNumberVerification: builder.mutation<
+      any,
+      { id: string; verified: boolean }
+    >({
+      query: ({ id, verified }) => ({
+        url: `updateUserCrdNumberVerification/${id}`,
+        method: "PUT",
+        body: { verified },
+      }),
+      invalidatesTags: [USERS_TAG],
+    }),
     updateReportStatus: builder.mutation<any, any>({
       query: (id) => ({
         url: `updateReportStatus/${id}`,
@@ -114,10 +145,19 @@ export const youngApi: any = createApi({
       },
       providesTags: [COMPLAINTS],
     }),
+    getComplaintById: builder.query<any, string>({
+      query: (id) => ({
+        url: `getComplaintById/${id}`,
+        method: "GET",
+      }),
+      providesTags: [COMPLAINTS],
+    }),
     getPosts: builder.query<any, any>({
-      query: ({ page = 1, userId }) => {
+      query: ({ page = 1, userId, title, flagged }) => {
         const params = new URLSearchParams({ page: String(page) });
         if (userId?.trim()) params.append("userId", userId.trim());
+        if (title?.trim()) params.append("title", title.trim());
+        if (flagged !== undefined) params.append("flagged", String(flagged));
         return { url: `getPosts?${params.toString()}`, method: "GET" };
       },
       providesTags: [POSTS],
@@ -166,6 +206,56 @@ export const youngApi: any = createApi({
       }),
       invalidatesTags: [CONTACT],
     }),
+    getAdminFaqs: builder.query<any, void>({
+      query: () => ({
+        url: "faqs",
+        method: "GET",
+      }),
+      providesTags: [FAQS],
+    }),
+    createFaq: builder.mutation<
+      any,
+      { question: string; answer: string; order?: number; isActive?: boolean }
+    >({
+      query: (body) => ({
+        url: "faqs",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [FAQS],
+    }),
+    updateFaq: builder.mutation<
+      any,
+      { id: string; body: { question?: string; answer?: string; order?: number; isActive?: boolean } }
+    >({
+      query: ({ id, body }) => ({
+        url: `faqs/${id}`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: [FAQS],
+    }),
+    deleteFaq: builder.mutation<any, string>({
+      query: (id) => ({
+        url: `faqs/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [FAQS],
+    }),
+    sendGlobalNotification: builder.mutation<any, { title: string; message: string }>({
+      query: (body) => ({
+        url: "push-notifications/global",
+        method: "POST",
+        body,
+      }),
+    }),
+    createEventsByUserType: builder.mutation<any, FormData>({
+      query: (body) => ({
+        url: "events/by-user-type",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -175,16 +265,26 @@ export const {
   useGetAllUsersQuery,
   useGetUserByIdQuery,
   useGetAdminUserChatQuery,
+  useGetUserActivitiesQuery,
   useGetComplaintsQuery,
+  useGetComplaintByIdQuery,
   useGetPostsQuery,
   useLazyGetPostsQuery,
   useGetAllAdsQuery,
   useUpdateUserStatusMutation,
   useUpdateUserBasicDetailsMutation,
+  useUpdateUserDocumentVerificationMutation,
+  useUpdateUserCrdNumberVerificationMutation,
   useUpdateReportStatusMutation,
   useUpdateAdStatusMutation,
   useChangePasswordMutation,
   useUploadMediaMutation,
   useGetContactSubmissionsQuery,
   useReplyToContactMutation,
+  useGetAdminFaqsQuery,
+  useCreateFaqMutation,
+  useUpdateFaqMutation,
+  useDeleteFaqMutation,
+  useSendGlobalNotificationMutation,
+  useCreateEventsByUserTypeMutation,
 } = youngApi;

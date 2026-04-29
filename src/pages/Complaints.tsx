@@ -59,11 +59,27 @@ export default function Complaints() {
           complaint?.reporterUserId?.firstName +
           " " +
           complaint?.reporterUserId?.lastName,
+        reporterUserId: complaint?.reporterUserId?._id ?? "",
         reason: complaint.reason,
         createdAt: moment(complaint.createdAt).format("YYYY-MM-DD"),
         isResolved: complaint.isResolved,
         screenshots: complaint.screenshots,
         additionalDetails: complaint.additionalDetails,
+        reportedPost: complaint?.postId
+          ? {
+              id: complaint?.postId?._id,
+              title: complaint?.postId?.title,
+              description: complaint?.postId?.description,
+              image: complaint?.postId?.image,
+              symbol: complaint?.postId?.symbol,
+              topic: complaint?.postId?.topic,
+              createdAt: complaint?.postId?.createdAt,
+              author: complaint?.postId?.userId?.firstName
+                ? `${complaint?.postId?.userId?.firstName} ${complaint?.postId?.userId?.lastName}`
+                : "",
+              authorUserId: complaint?.postId?.userId?._id ?? "",
+            }
+          : null,
       }));
 
       setComplaints(finalData);

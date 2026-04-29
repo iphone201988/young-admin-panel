@@ -29,6 +29,18 @@ const pageConfig = {
     title: "Contact Us",
     subtitle: "View and reply to contact form submissions",
   },
+  "/admin/content-management": {
+    title: "Content Management",
+    subtitle: "Manage landing page FAQs",
+  },
+  "/admin/push-notifications": {
+    title: "Push Notification Manager",
+    subtitle: "Send global alerts to all users",
+  },
+  "/admin/calendar-events": {
+    title: "Calendar Events",
+    subtitle: "Create events by user type",
+  },
   "/admin/messaging": {
     title: "Messaging",
     subtitle: "Send messages to users individually or in bulk",

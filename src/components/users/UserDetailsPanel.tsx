@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useUpdateUserBasicDetailsMutation } from "@/redux/api";
+import {
+  useUpdateUserBasicDetailsMutation,
+  useUpdateUserCrdNumberVerificationMutation,
+  useUpdateUserDocumentVerificationMutation,
+} from "@/redux/api";
 import { cn, userRole } from "@/lib/utils";
 import { getCompleteUrl } from "@/lib/utils";
 import { toast } from "react-toastify";
@@ -24,6 +29,20 @@ type BasicForm = {
   countryCode: string;
   phone: string;
 };
+
+function documentVerificationLabel(status: string | null | undefined): string {
+  if (status == null || status === "") return "Not set";
+  switch (status) {
+    case "approved":
+      return "Verified";
+    case "in_review":
+      return "In review";
+    case "reject":
+      return "Rejected";
+    default:
+      return String(status);
+  }
+}
 
 function formFromUser(user: Record<string, any>): BasicForm {
   return {
@@ -48,6 +67,10 @@ export function UserDetailsPanel({
   const [form, setForm] = useState<BasicForm>(() => formFromUser(user));
 
   const [updateBasic, { isLoading: isSaving }] = useUpdateUserBasicDetailsMutation();
+  const [updateDocVerification, { isLoading: isUpdatingDoc }] =
+    useUpdateUserDocumentVerificationMutation();
+  const [updateCrdVerification, { isLoading: isUpdatingCrd }] =
+    useUpdateUserCrdNumberVerificationMutation();
 
   useEffect(() => {
     if (!editing) {
@@ -92,21 +115,92 @@ export function UserDetailsPanel({
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
+  const docStatus = user.isDocumentVerified as string | undefined;
+  const isDocApproved = docStatus === "approved";
+  const canMarkVerified = docStatus !== "approved";
+  const canMarkUnverified = docStatus === "approved" || docStatus === "reject";
+
+  const handleVerifyDocument = async () => {
+    if (!user?._id) return;
+    try {
+      await updateDocVerification({ id: user._id, verified: true }).unwrap();
+      toast.success("Document marked as verified");
+      onRefetch();
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to update document status");
+    }
+  };
+
+  const handleUnverifyDocument = async () => {
+    if (!user?._id) return;
+    try {
+      await updateDocVerification({ id: user._id, verified: false }).unwrap();
+      toast.success("Document marked as not verified");
+      onRefetch();
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to update document status");
+    }
+  };
+
+  const hasCrdNumber = Boolean(user.crdNumber && String(user.crdNumber).trim());
+  const isCrdVerified = Boolean(user.isCrdNumberVerified);
+  const canMarkCrdVerified = hasCrdNumber && !isCrdVerified;
+  const canMarkCrdUnverified = hasCrdNumber && isCrdVerified;
+
+  const handleVerifyCrd = async () => {
+    if (!user?._id) return;
+    try {
+      await updateCrdVerification({ id: user._id, verified: true }).unwrap();
+      toast.success("CRD number marked as verified");
+      onRefetch();
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to update CRD verification");
+    }
+  };
+
+  const handleUnverifyCrd = async () => {
+    if (!user?._id) return;
+    try {
+      await updateCrdVerification({ id: user._id, verified: false }).unwrap();
+      toast.success("CRD number marked as not verified");
+      onRefetch();
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to update CRD verification");
+    }
+  };
+
   return (
     <div
       className={cn(
-        "bg-white rounded-xl border border-border shadow-sm p-6 flex flex-col min-h-0 h-full max-h-full",
+        "bg-white rounded-xl border border-border shadow-sm p-6 flex flex-col",
         className
       )}
     >
       <div className="flex shrink-0 items-start justify-between gap-4">
         <h1 className="text-xl font-bold">User Details</h1>
         {user.profileImage ? (
-          <img
-            src={getCompleteUrl(user.profileImage)}
-            alt="Profile"
-            className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border shrink-0"
-          />
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                type="button"
+                className="rounded-full shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label="View full profile image"
+              >
+                <img
+                  src={getCompleteUrl(user.profileImage)}
+                  alt="Profile"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border cursor-zoom-in"
+                />
+              </button>
+            </DialogTrigger>
+            <DialogContent className="max-w-3xl p-3 sm:p-4">
+              <img
+                src={getCompleteUrl(user.profileImage)}
+                alt="User profile full view"
+                className="w-full max-h-[80vh] object-contain rounded-md"
+              />
+            </DialogContent>
+          </Dialog>
         ) : (
           <div
             className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-dashed border-muted-foreground/30 bg-muted shrink-0"
@@ -115,35 +209,33 @@ export function UserDetailsPanel({
         )}
       </div>
 
-      <div className="flex-1 min-h-0 overflow-y-auto mt-4 pr-1 -mr-1 space-y-4 text-sm">
-        <div>
+      <div className="mt-4 text-sm grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="md:col-span-2 xl:col-span-3 rounded-md border border-border p-3">
           <p className="font-semibold text-foreground">User ID</p>
           <p className="font-mono text-muted-foreground break-all mt-1">{user._id}</p>
         </div>
 
         {editing ? (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="space-y-1.5">
-                <Label htmlFor="ud-firstName">First name</Label>
-                <Input
-                  id="ud-firstName"
-                  value={form.firstName}
-                  onChange={(e) => updateField("firstName", e.target.value)}
-                  autoComplete="off"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="ud-lastName">Last name</Label>
-                <Input
-                  id="ud-lastName"
-                  value={form.lastName}
-                  onChange={(e) => updateField("lastName", e.target.value)}
-                  autoComplete="off"
-                />
-              </div>
+            <div className="space-y-1.5 rounded-md border border-border p-3">
+              <Label htmlFor="ud-firstName">First name</Label>
+              <Input
+                id="ud-firstName"
+                value={form.firstName}
+                onChange={(e) => updateField("firstName", e.target.value)}
+                autoComplete="off"
+              />
             </div>
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 rounded-md border border-border p-3">
+              <Label htmlFor="ud-lastName">Last name</Label>
+              <Input
+                id="ud-lastName"
+                value={form.lastName}
+                onChange={(e) => updateField("lastName", e.target.value)}
+                autoComplete="off"
+              />
+            </div>
+            <div className="space-y-1.5 rounded-md border border-border p-3">
               <Label htmlFor="ud-username">Username</Label>
               <Input
                 id="ud-username"
@@ -152,7 +244,7 @@ export function UserDetailsPanel({
                 autoComplete="off"
               />
             </div>
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 rounded-md border border-border p-3 md:col-span-2 xl:col-span-2">
               <Label htmlFor="ud-email">Email</Label>
               <Input
                 id="ud-email"
@@ -162,52 +254,50 @@ export function UserDetailsPanel({
                 autoComplete="off"
               />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="space-y-1.5 sm:col-span-1">
-                <Label htmlFor="ud-cc">Country code</Label>
-                <Input
-                  id="ud-cc"
-                  value={form.countryCode}
-                  onChange={(e) => updateField("countryCode", e.target.value)}
-                  placeholder="e.g. 1"
-                  autoComplete="off"
-                />
-              </div>
-              <div className="space-y-1.5 sm:col-span-2">
-                <Label htmlFor="ud-phone">Phone</Label>
-                <Input
-                  id="ud-phone"
-                  value={form.phone}
-                  onChange={(e) => updateField("phone", e.target.value)}
-                  autoComplete="off"
-                />
-              </div>
+            <div className="space-y-1.5 rounded-md border border-border p-3">
+              <Label htmlFor="ud-cc">Country code</Label>
+              <Input
+                id="ud-cc"
+                value={form.countryCode}
+                onChange={(e) => updateField("countryCode", e.target.value)}
+                placeholder="e.g. 1"
+                autoComplete="off"
+              />
+            </div>
+            <div className="space-y-1.5 rounded-md border border-border p-3 md:col-span-2 xl:col-span-2">
+              <Label htmlFor="ud-phone">Phone</Label>
+              <Input
+                id="ud-phone"
+                value={form.phone}
+                onChange={(e) => updateField("phone", e.target.value)}
+                autoComplete="off"
+              />
             </div>
           </>
         ) : (
           <>
-            <div>
+            <div className="rounded-md border border-border p-3">
               <p className="font-semibold">Name</p>
               <p className="text-muted-foreground mt-1">
                 {[user.firstName, user.lastName].filter(Boolean).join(" ") || "—"}
               </p>
             </div>
-            <div>
+            <div className="rounded-md border border-border p-3">
               <p className="font-semibold">Username</p>
               <p className="text-muted-foreground mt-1">{user.username ?? "—"}</p>
             </div>
-            <div>
+            <div className="rounded-md border border-border p-3 md:col-span-2 xl:col-span-2">
               <p className="font-semibold">Email</p>
               <p className="text-muted-foreground mt-1 break-all">{user.email ?? "—"}</p>
             </div>
-            <div>
+            <div className="rounded-md border border-border p-3">
               <p className="font-semibold">Phone</p>
               <p className="text-muted-foreground mt-1">{phoneDisplay}</p>
             </div>
           </>
         )}
 
-        <div>
+        <div className="rounded-md border border-border p-3">
           <p className="font-semibold">Role</p>
           <span
             className={`inline-block mt-1 px-2 py-1 rounded-full text-xs font-medium ${
@@ -219,7 +309,7 @@ export function UserDetailsPanel({
             {displayRole}
           </span>
         </div>
-        <div>
+        <div className="rounded-md border border-border p-3">
           <p className="font-semibold">Status</p>
           <span
             className={`inline-block mt-1 px-2 py-1 rounded-full text-xs font-medium ${
@@ -230,7 +320,7 @@ export function UserDetailsPanel({
           </span>
         </div>
         {user.isDeleted != null && (
-          <div>
+          <div className="rounded-md border border-border p-3">
             <p className="font-semibold">Account</p>
             <p
               className={`mt-1 ${user.isDeleted ? "text-red-600 font-medium" : "text-green-600"}`}
@@ -240,27 +330,88 @@ export function UserDetailsPanel({
           </div>
         )}
         {user.createdAt && (
-          <div>
+          <div className="rounded-md border border-border p-3">
             <p className="font-semibold">Joined</p>
             <p className="text-muted-foreground mt-1">
               {new Date(user.createdAt).toLocaleDateString()}
             </p>
           </div>
         )}
-        {user.crdNumber && (
-          <div>
-            <p className="font-semibold">CRD Number</p>
-            <p className="text-muted-foreground mt-1">{user.crdNumber}</p>
+        <div className="md:col-span-2 xl:col-span-3 rounded-md p-2">
+          <p className="font-semibold">CRD number (CRN)</p>
+          <p className="text-muted-foreground mt-1 font-mono">
+            {hasCrdNumber ? user.crdNumber : "—"}
+          </p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Manual verification of the registration number entered by the user.
+          </p>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <span
+              className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                !hasCrdNumber
+                  ? "bg-muted text-muted-foreground"
+                  : isCrdVerified
+                    ? "bg-green-100 text-green-800"
+                    : "bg-amber-100 text-amber-900"
+              }`}
+            >
+              {!hasCrdNumber ? "No number on file" : isCrdVerified ? "Verified" : "Not verified"}
+            </span>
+            <Button
+              type="button"
+              size="sm"
+              disabled={isUpdatingCrd || editing || !canMarkCrdVerified}
+              onClick={handleVerifyCrd}
+            >
+              Mark verified
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              disabled={isUpdatingCrd || editing || !canMarkCrdUnverified}
+              onClick={handleUnverifyCrd}
+            >
+              Mark unverified
+            </Button>
           </div>
-        )}
-        {user.isDocumentVerified != null && (
-          <div>
-            <p className="font-semibold">Document Verified</p>
-            <p className="text-muted-foreground mt-1">
-              {user.isDocumentVerified ? "Yes" : "No"}
-            </p>
+        </div>
+        <div className="md:col-span-2 xl:col-span-3 rounded-md p-2">
+          <p className="font-semibold">Document (Didit)</p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Override verification for documents submitted through Didit.
+          </p>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <span
+              className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                isDocApproved
+                  ? "bg-green-100 text-green-800"
+                  : docStatus === "reject"
+                    ? "bg-red-100 text-red-800"
+                    : "bg-amber-100 text-amber-900"
+              }`}
+            >
+              {documentVerificationLabel(docStatus)}
+            </span>
+            <Button
+              type="button"
+              size="sm"
+              disabled={isUpdatingDoc || editing || !canMarkVerified}
+              onClick={handleVerifyDocument}
+            >
+              Mark verified
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              disabled={isUpdatingDoc || editing || !canMarkUnverified}
+              onClick={handleUnverifyDocument}
+            >
+              Mark unverified
+            </Button>
           </div>
-        )}
+        </div>
       </div>
 
       <div className="shrink-0 border-t border-border pt-4 mt-4 flex flex-wrap items-center gap-2">

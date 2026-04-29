@@ -15,6 +15,9 @@ import Settings from "./pages/Settings";
 import LoginPage from "./pages/Login";
 import UploadMedia from "./pages/UploadMedia";
 import ContactUs from "./pages/ContactUs";
+import ContentManagement from "./pages/ContentManagement";
+import PushNotificationManager from "./pages/PushNotificationManager";
+import CalendarEventManager from "./pages/CalendarEventManager";
 import DeleteAccount from "./pages/DeleteAccount";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
@@ -46,6 +49,9 @@ function Router() {
           <Route path="ads" element={<Ads />} />
           <Route path="settings" element={<Settings />} />
           <Route path="upload-media" element={<UploadMedia />} />
+          <Route path="content-management" element={<ContentManagement />} />
+          <Route path="push-notifications" element={<PushNotificationManager />} />
+          <Route path="calendar-events" element={<CalendarEventManager />} />
           <Route path="contact-us" element={<ContactUs />} />
           {/* <Route path="/messaging" element={<Messaging />} /> */}
           {/* <Route path="/users" component={Users} />

@@ -9,7 +9,7 @@ export default function PostDetail() {
 
   if (!post) {
     return (
-      <div className="max-w-2xl mx-auto p-6">
+      <div className="w-full p-4 md:p-6">
         <div className="bg-white rounded-xl border border-border shadow-sm p-8 text-center">
           <p className="text-muted-foreground mb-4">Post not found or no details available.</p>
           <Button asChild variant="outline">
@@ -21,7 +21,7 @@ export default function PostDetail() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className="w-full p-4 md:p-6">
       <div className="mb-4">
         <Button asChild variant="ghost" size="sm">
           <Link to="/admin/posts">← Back to Posts</Link>
@@ -62,6 +62,24 @@ export default function PostDetail() {
           <p className="whitespace-pre-line border rounded p-3 bg-muted/20">
             {post.fullDescription ?? post.description}
           </p>
+          {post.reason && (
+            <>
+              <p>
+                <strong>AI Flag Reason:</strong>
+              </p>
+              <p className="whitespace-pre-line border rounded p-3 bg-red-50 text-red-700">
+                {post.reason}
+              </p>
+            </>
+          )}
+          {post.flagType && (
+            <p>
+              <strong>AI Flag Type:</strong>{" "}
+              <span className="font-medium text-red-700 capitalize">
+                {String(post.flagType).replace(/_/g, " ")}
+              </span>
+            </p>
+          )}
         </div>
 
         {post.image && (

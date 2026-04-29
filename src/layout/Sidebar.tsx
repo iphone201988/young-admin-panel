@@ -14,6 +14,9 @@ import {
   Menu,
   User,
   Mail,
+  CircleHelp,
+  Bell,
+  CalendarDays,
 } from "lucide-react";
 import { Link, useLocation } from "react-router";
 
@@ -29,6 +32,9 @@ const navigationItems = [
     badge: "",
   },
   { icon: ImageIcon, label: "Upload Media", href: "/admin/upload-media" },
+  { icon: CircleHelp, label: "Content Management", href: "/admin/content-management" },
+  { icon: Bell, label: "Push Notifications", href: "/admin/push-notifications" },
+  { icon: CalendarDays, label: "Calendar Events", href: "/admin/calendar-events" },
   { icon: Mail, label: "Contact Us", href: "/admin/contact-us" },
   // { icon: MessageSquare, label: "Messaging", href: "/messaging" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },

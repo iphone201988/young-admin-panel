@@ -12,11 +12,15 @@ import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
 export default function Posts() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchUserId, setSearchUserId] = useState("");
-  const debouncedSearch = useDebouncedValue(searchUserId.trim(), 400);
+  const [searchValue, setSearchValue] = useState("");
+  const [filterMode, setFilterMode] = useState<"all" | "flagged">("all");
+  const debouncedSearch = useDebouncedValue(searchValue.trim(), 400);
+  const isObjectId = /^[a-f\d]{24}$/i.test(debouncedSearch);
   const { data, isLoading } = useGetPostsQuery({
     page: currentPage,
-    userId: debouncedSearch || undefined,
+    userId: isObjectId ? debouncedSearch : undefined,
+    title: !isObjectId && debouncedSearch ? debouncedSearch : undefined,
+    flagged: filterMode === "flagged" ? true : undefined,
   });
   // console.log(data?.data?.posts)
   const [posts, setPosts] = useState([]);
@@ -59,6 +63,8 @@ export default function Posts() {
         symbol: post?.symbol,
         topic: post?.topic,
         image: post?.image,
+        reason: post?.reason ?? "",
+        flagType: post?.flagType ?? "",
       }));
 
       setPosts(finalData);
@@ -182,14 +188,27 @@ export default function Posts() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input
               type="text"
-              placeholder="Search by User ID"
-              value={searchUserId}
+              placeholder="Search by User ID or title"
+              value={searchValue}
               onChange={(e) => {
-                setSearchUserId(e.target.value);
+                setSearchValue(e.target.value);
                 setCurrentPage(1);
               }}
               className="w-full pl-9 pr-4 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             />
+          </div>
+          <div className="w-full sm:w-48">
+            <select
+              value={filterMode}
+              onChange={(e) => {
+                setFilterMode(e.target.value as "all" | "flagged");
+                setCurrentPage(1);
+              }}
+              className="w-full px-3 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              <option value="all">All Posts</option>
+              <option value="flagged">Flagged Posts</option>
+            </select>
           </div>
         </div>
         <div className="p-6  " >

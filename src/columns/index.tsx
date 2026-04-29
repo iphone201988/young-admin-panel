@@ -170,6 +170,13 @@ export const getComplaintcolumns = (handleComplainEdit: any) => [
     header: "Actions",
     render: (value: any, row: any) => (
       <div className="flex space-x-2">
+        <Link
+          to={`/admin/complaints/${row.id}`}
+          state={{ complaint: row }}
+          className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+        >
+          View
+        </Link>
         <button
           className="text-blue-600 hover:text-blue-800 text-sm font-medium"
           onClick={(e: any) => handleComplainEdit(e, row.id)}

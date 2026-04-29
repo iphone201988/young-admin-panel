@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import VerifiedImage from "../../assets/verified.png";
 import FairTrade from "../../assets/fair-trade 1.png";
 import SearchIcon from "../../assets/search (4).png";
@@ -53,6 +53,7 @@ const LandingPage = () => {
   const [subscribeEmail, setSubscribeEmail] = useState("");
   const [subscribeLoading, setSubscribeLoading] = useState(false);
   const [subscribeMessage, setSubscribeMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [faqData, setFaqData] = useState<{ question: string; answer: string }[]>([]);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,7 +99,7 @@ const LandingPage = () => {
     setOpenFaq(openFaq === index ? null : index);
   };
 
-  const faqData = [
+  const defaultFaqData = [
     {
       question: 'What is Boom?',
       answer:
@@ -175,6 +176,31 @@ const LandingPage = () => {
         'Joining the Boom community is free. We are committed to democratizing access to financial insights. For those looking to scale their presence, we offer premium features including enhanced live-streaming capabilities and sponsored post options to reach a wider audience.',
     },
   ];
+
+  useEffect(() => {
+    setFaqData(defaultFaqData);
+
+    const fetchFaqs = async () => {
+      try {
+        const baseUrl = import.meta.env.VITE_BACKEND_URL || "";
+        const response = await fetch(`${baseUrl}/api/v1/subscribe/faqs`);
+        const payload = await response.json().catch(() => ({}));
+        const faqs = payload?.data?.faqs;
+        if (response.ok && Array.isArray(faqs) && faqs.length > 0) {
+          setFaqData(
+            faqs.map((item: any) => ({
+              question: item?.question || "",
+              answer: item?.answer || "",
+            })),
+          );
+        }
+      } catch {
+        // Keep default FAQ content as fallback.
+      }
+    };
+
+    fetchFaqs();
+  }, []);
 
   const coreFeatures = [
     { icon: VerifiedImage, text: "Build a dynamic profile" },
